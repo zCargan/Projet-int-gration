@@ -8,8 +8,6 @@ import Default from './pages/default';
 import Profil from './pages/Profil';
 import Carte from './pages/Carte';
 import Rgpd from './pages/Rgpd'
-import ModifierObjectif from './pages/ModifierObjectif';
-import NouvelObjectif from './pages/NouvelObjectif';
 import './styles/App.css'
 import ProfilUsers from './pages/ProfilUser';
 import NouvelObjectif from './components/NouvelObjectif';

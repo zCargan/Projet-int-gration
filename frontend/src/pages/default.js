@@ -2,33 +2,22 @@ import React from 'react'
 import "../styles/default.css"
 import ReactPlayer from 'react-player'
 import RGPD from '../components/RGPD';
-import ReactPlayer from 'react-player'
+import '../styles/default.css'
+import React from 'react'
+import BulleProfil from '../components/BulleProfil';
 
 
 const Default = () => {
-
-    function test() {
-        console.log("hello")
-    }
 
     return (
         <div className='div_global'>
             <div>
                 <p className='bienvenue_text'>
-                    NEWME
+                    Bienvenue sur la page d'accueil du site
                 </p>
             </div>
-            <div>
-                <p>
-                    NewMe est un projet étudiant dans le cadre d'un cours.
-
-                    Nous avons voulu pousser la communauté 
-                </p>
-            </div>
-            <div>
-                <RGPD />
-            </div>
-        </div >
+            <BulleProfil />
+        </div>
     );
 };
 
