@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import bcrypt from 'bcryptjs'
 
 
-
 export function notXSSInjection(string) {
     return !(string.includes("<"))
 }
@@ -21,7 +20,45 @@ export function checkEmail(email) {
     return re.test(email);
 }
 
+export function allComplete(string1, string2, string3, string4) {
+    return !((string1 === "") || (string2 === "") || (string3 === "") || (string4 === ""))
+}
 
+export function allNotToLong(string1, string2, string3, string4) {
+    return (notToLongString(string1) && notToLongString(string2) && notToLongString(string3) && notToLongString(string4))
+}
+
+export function allNotXSSInjection(string1, string2, string3, string4) {
+    return (notXSSInjection(string1) && notXSSInjection(string2) && notXSSInjection(string3) && notXSSInjection(string4))
+}
+
+export function sameString(string1, string2) {
+    return (string1 === string2)
+}
+
+export function HasValidLength(string) {
+    return (string.length >= 12)
+}
+
+export function HasLowerCaseLetter(string) {
+    return (/[a-z]/.test(string))
+}
+
+export function HasUpperCaseLetter(string) {
+    return (/[A-Z]/.test(string))
+}
+
+export function HasSpecialCharacter(string) {
+    return (/[!@#$%^&*()\\[\]{}\-_+=~`|:;"'<>,./?]/.test(string))
+}
+
+export function HasNumber(string) {
+    return (/[0-9]/.test(string))
+}
+
+export function HasAll(string) {
+    return (HasValidLength(string) && HasLowerCaseLetter(string) && HasUpperCaseLetter(string) && HasSpecialCharacter(string) && HasNumber(string))
+}
 
 const Inscription = () => {
 
@@ -29,11 +66,11 @@ const Inscription = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [samePassword, setSamePassword] = useState("");
-    const passwordHasValidLength = password.length >= 12;
-    const passwordHasLowercaseLetter = /[a-z]/.test(password);
-    const passwordHasUppercaseLetter = /[A-Z]/.test(password);
-    const passwordHasSpecialCharacter = /[!@#$%^&*()\\[\]{}\-_+=~`|:;"'<>,./?]/.test(password)
-    const passwordHasNumber = /[0-9]/.test(password);
+    const passwordHasValidLength = HasValidLength(password);
+    const passwordHasLowercaseLetter = HasLowerCaseLetter(password);
+    const passwordHasUppercaseLetter = HasUpperCaseLetter(password);
+    const passwordHasSpecialCharacter = HasSpecialCharacter(password);
+    const passwordHasNumber = HasNumber(password);
     const hashedPassword = bcrypt.hashSync(password, 10);
 
 
@@ -75,12 +112,10 @@ const Inscription = () => {
         //variable nécessaire afin d'effectuer à la requete à la db afin de savoir si l'email est déja utilisé ou non
 
 
-        if ((username === "") || (email === "") || (password === "") || (samePassword === "")) {
-            alert("Veuillez compléter tous les champs");
-        } else {
-            if (notToLongString(username) && notToLongString(email) && notToLongString(password) && notToLongString(samePassword)) {
-                if (notXSSInjection(username) && notXSSInjection(email) && notXSSInjection(password) && notXSSInjection(samePassword)) {
-                    if (passwordHasValidLength && passwordHasLowercaseLetter && passwordHasUppercaseLetter && passwordHasSpecialCharacter && passwordHasNumber) {
+        if (allComplete(username, email, password, samePassword)) {
+            if (allNotToLong(username, email, password, samePassword)) {
+                if (allNotXSSInjection(username, email, password, samePassword)) {
+                    if (HasAll(password)) {
                         axios.post("http://localhost:3001/username", infos)
                             .then(response => {
                                 if (response.data === "not ok") {
@@ -92,10 +127,8 @@ const Inscription = () => {
                                                 if (response.data === "not ok") {
                                                     alert("Email already used")
                                                 } else {
-                                                    if (password === samePassword) {
-                                                        if (Number(password.length) < 12) {
-                                                            alert("Mot de passe trop court")
-                                                        } else {
+                                                    if (sameString(password, samePassword)) {
+                                                        if (HasValidLength(password)) {
                                                             axios
                                                                 .post("http://localhost:3001/inscription", données_envoyées)
                                                                 .then(response => {
@@ -111,6 +144,8 @@ const Inscription = () => {
                                                                         navigateToHome()
                                                                     }
                                                                 });
+                                                        } else {
+                                                            alert("Mot de passe trop court")
                                                         }
                                                     } else {
                                                         alert("Vos deux mots de passe ne correspondent pas")
@@ -131,6 +166,9 @@ const Inscription = () => {
             } else {
                 alert("Les informations que vous rentrer sont trop longue")
             }
+
+        } else {
+            alert("Veuillez compléter tous les champs");
         }
     }
     return (

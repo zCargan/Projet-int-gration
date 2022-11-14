@@ -103,8 +103,8 @@ const App = () => {
         <div className="element">
           <Routes>
             <Route path="/" element={<Default />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/objectifs" element={connecte ? <Objectifs /> : <Navigate to="/inscription" />} className="objectifs" />
+            <Route path="/about" element={<About />}></Route>
+            <Route path="/objectifs" element={<Objectifs />} className="objectifs" />
             {/* page par défault  */}
             <Route path="*" element={<Default />} />
             <Route path="/profil" element={connecte ? <Profil /> : <Navigate to="/inscription" />} />
@@ -115,10 +115,10 @@ const App = () => {
             <Route path='/profilUser' element={<ProfilUser />} />
             <Route path="/modifierObjectif" element={<ModifierObjectif/>}/>
             <Route path="/profil" element={<Profil />} />
-            <Route path="/inscription" element={<Page_compte />}/>
+            <Route path="/inscription" element={<Page_compte />} />
             <Route path="/carte" element={<Carte />} />
             <Route path="/profilUser" element={<ProfilUsers />} />
-            <Route path="/nouvelObjectif" element={<NouvelObjectif />} />
+            <Route path='/nouvel_objectif' element={<NouvelObjectif />} />
           </Routes>
         </div>
       </BrowserRouter>
