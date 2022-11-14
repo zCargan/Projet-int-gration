@@ -42,9 +42,15 @@
       "last 1 safari version"
     ]
   },
+  "moduleNameMapper": {
+    "axios": "require.resolve('axios')"
+  },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
-    "react-test-renderer": "^18.2.0"
+    "@types/jest": "^29.2.2",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^29.3.1",
+    "jest": "^27.5.1"
   }
 }

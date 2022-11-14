@@ -1,10 +1,27 @@
-import React, {useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
+//import axios from 'axios';
 import "../styles/inscription.css"
 import "../styles/App.css"
 import emailjs from 'emailjs-com';
 import { useNavigate } from 'react-router-dom';
 import bcrypt from 'bcryptjs'
+
+
+
+export function notXSSInjection(string) {
+    return !(string.includes("<"))
+}
+
+export function notToLongString(string) {
+    return (string.length < 30)
+}
+
+export function checkEmail(email) {
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+}
+
+
 
 const Inscription = () => {
 
@@ -12,14 +29,12 @@ const Inscription = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [samePassword, setSamePassword] = useState("");
-    const passwordHasValidLength = HasValidLength(password);
-    const passwordHasLowercaseLetter = HasLowerCaseLetter(password);
-    const passwordHasUppercaseLetter = HasUpperCaseLetter(password);
-    const passwordHasSpecialCharacter = HasSpecialCharacter(password);
-    const passwordHasNumber = HasNumber(password);
-    const hashedPassword = bcrypt.hashSync(password, "$2a$10$sZk/IsTrgMV.iO0dRgU/xu");
-    const [villes, setVilles] = useState([]);
-    const [city, setCity] = useState("");
+    const passwordHasValidLength = password.length >= 12;
+    const passwordHasLowercaseLetter = /[a-z]/.test(password);
+    const passwordHasUppercaseLetter = /[A-Z]/.test(password);
+    const passwordHasSpecialCharacter = /[!@#$%^&*()\\[\]{}\-_+=~`|:;"'<>,./?]/.test(password)
+    const passwordHasNumber = /[0-9]/.test(password);
+    const hashedPassword = bcrypt.hashSync(password, 10);
 
 
     /*=========================================== RECUPERE LES VARIABLES DE CREACTION DE COMPTE ===========================================*/
@@ -48,10 +63,6 @@ const Inscription = () => {
             password,
             samePassword
         }
-
-
-        const hashedPassword = bcrypt.hashSync(password, 10);
-
         const données_envoyées = {
             "username": username,
             "email": email,
@@ -62,19 +73,6 @@ const Inscription = () => {
         }
 
         //variable nécessaire afin d'effectuer à la requete à la db afin de savoir si l'email est déja utilisé ou non
-
-        function notXSSInjection(string) {
-            return !(string.includes("<"))
-        }
-
-        function notToLongString(string) {
-            return (string.length < 30)
-        }
-
-        function checkEmail(email) {
-            var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            return re.test(email);
-        }
 
 
         if ((username === "") || (email === "") || (password === "") || (samePassword === "")) {
