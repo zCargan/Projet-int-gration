@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-//import axios from 'axios';
+import axios from 'axios';
 import "../styles/inscription.css"
 import "../styles/App.css"
 import emailjs from 'emailjs-com';
@@ -118,13 +118,13 @@ const Inscription = () => {
                     if (HasAll(password)) {
                         axios.post("http://localhost:3001/username", infos)
                             .then(response => {
-                                if (response.data === "not ok") {
+                                if (response.data === false) {
                                     alert("Username already used");
                                 } else {
                                     if (checkEmail(email)) {
                                         axios.post("http://localhost:3001/email", infos)
                                             .then(response => {
-                                                if (response.data === "not ok") {
+                                                if (response.data === false) {
                                                     alert("Email already used")
                                                 } else {
                                                     if (sameString(password, samePassword)) {

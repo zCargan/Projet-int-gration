@@ -103,13 +103,13 @@ describe('Username déja pris', () => {
         const res = await request(app)
             .post('/username')
             .send({
-                username: 'Mallo',
+                username: 'Logan',
                 email: 'mallo.carlier@gmail.com',
                 password: '$2a$10$uDAVJFDXHhIQWNcGArbPjujBFxCjQrTIysBGg6xYLJDc8ZUwiXXU6',
                 confirmed: false,
                 objectifs: [],
                 city: ''
             });
-        expect(res.text).toBe("true")
+        expect(res.text).toBe("false")
     })
 });
