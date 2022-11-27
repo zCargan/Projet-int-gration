@@ -108,7 +108,7 @@ const App = () => {
             <Route path="/carte" element={connecte ? <Carte /> : <Navigate to="/inscription" />} />
             <Route path='/nouvel_objectif' element={connecte ? <NouvelObjectif /> : <Navigate to="/inscription" />} />
             <Route path='/rgpd' element={<Rgpd />} />
->>>>>>> 68a6bae (REF(US09): résolution merge conflits)
+
           </Routes>
         </div>
       </BrowserRouter>
