@@ -2,7 +2,8 @@ import '../styles/App.css'
 import '../styles/objectifs.css'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom';
+import Popup from "reactjs-popup";
+import NouvelObjectif from '../components/NouvelObjectif';
 
 // Pour effectuer les tests, il faut mettre en commentaire les lignes 1,2 et 4!
 
@@ -150,16 +151,20 @@ function Objectifs() {
     }, [])
     return (
         <>
-            <div className="search-bar">
-                <input type="text" placeholder="Recherche" className="searchedObjectifs" onChange={(e) => setSearchedObjectifs(e.target.value)}></input>
-                <p className="searchedObjectifsButton" onClick={rechercherObjectifs}>Rechercher</p>
-            </div>
-            <ul>
-                <p>{nouveauxObjectifs}</p>
-                {data.map((objectif) =>
-                    <li key={objectif._id} className="objectifs"> <p className="titre-objectifs">{test}</p><i className="fas fa-circle-plus" onClick={() => { ajouterObjectifs(objectif) }}></i></li>
+        <div className="search-bar">
+            <input type="text" placeholder="Recherche" className="searchedObjectifs" onChange={(e) => setSearchedObjectifs(e.target.value)}></input>
+            <p className="searchedObjectifsButton" onClick={rechercherObjectifs}>Rechercher</p>
+        </div>
+        <ul>
+            {data.map((objectif) =>
+                <li key={objectif._id} className="objectifs"> <p className="titre-objectifs">{objectif.objectif}</p><i className="fas fa-circle-plus" onClick={() => {ajouterObjectifs(objectif)}}></i></li>
+            )}
+        </ul>
+        <Popup trigger={<button className="nouvelObjectif"> Ajouter un objectif personalisé </button>} position="center">
+            {close => (
+                <NouvelObjectif/>
                 )}
-            </ul>
+            </Popup>
         </>
     );
 }
