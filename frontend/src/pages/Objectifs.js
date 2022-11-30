@@ -114,9 +114,11 @@ function Objectifs() {
             alert("L'objectif choisi a déjà été ajouté !")
             return
         }
-        query_choisie = { "id": document.cookie, objectifs: nouveauxObjectifs }
-        console.log(query_choisie)
-        axios.post("http://localhost:3001/user/objectif", query_choisie).then(alert("Objectif ajouté avec succès !"))
+        objectifUser = {"name":name,"description":description, "type":type, "frequence":frequence, "onProfile":onProfile, "share":share }
+        nouveauxObjectifs.push(objectifUser)
+        let dataToSend = {"id" : id, "objectifs" : nouveauxObjectifs}
+
+        axios.post("http://localhost:3001/user/objectif", dataToSend).then(alert("Objectif ajouté avec succès !"))
         window.location.reload(false);
     };
 
