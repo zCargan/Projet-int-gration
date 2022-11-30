@@ -2,6 +2,8 @@ import '../styles/App.css'
 import '../styles/objectifs.css'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import Popup from "reactjs-popup";
+import NouvelObjectif from '../components/NouvelObjectif';
 import { useNavigate } from 'react-router-dom';
 
 // Pour effectuer les tests, il faut mettre en commentaire les lignes 1,2 et 4!
@@ -148,6 +150,11 @@ function Objectifs() {
                 <li key={objectif._id} className="objectifs"> <p className="titre-objectifs">{objectif.objectif}</p><i className="fas fa-circle-plus" onClick={() => {ajouterObjectifs(objectif)}}></i></li>
             )}
         </ul>
+        <Popup trigger={<button className="nouvelObjectif"> Ajouter un objectif personalisé </button>} position="center">
+            {close => (
+                <NouvelObjectif/>
+                )}
+            </Popup>
         </>
     );
 }

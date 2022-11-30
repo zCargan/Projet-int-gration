@@ -1,16 +1,11 @@
-import React from 'react';
+import React, { useState ,useEffect} from 'react';
+import "../styles/App.css"
+import axios from 'axios'
 
 const NouvelObjectif = () => {
-
-
-    return (
-        <div>
-            <form>
-                <input placeholder='Nom du nouvel objectif' />
-                <input placeholder='Catégorie du nouvel objectif' />
-            </form>
-        </div>
-    );
+    return(
+        <h2>test du bouton popup </h2>
+    )
 };
 
-export default NouvelObjectif;
+export default NouvelObjectif
