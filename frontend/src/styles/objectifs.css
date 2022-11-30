@@ -102,6 +102,10 @@ p {
     align-items: center;
 }
 
+
+#img_oeil {
+    size: 1px
+}
 .popup-content {
     margin: auto;
     background-color: #a09f9f;

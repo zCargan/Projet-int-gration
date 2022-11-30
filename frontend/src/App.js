@@ -7,7 +7,13 @@ import Navbar from './components/navbar';
 import Default from './pages/default';
 import Profil from './pages/Profil';
 import Carte from './pages/Carte';
+<<<<<<< HEAD
 import Rgpd from './pages/Rgpd'
+import ModifierObjectif from './pages/ModifierObjectif';
+=======
+import NouvelObjectif from './pages/NouvelObjectif';
+>>>>>>> 19406ca (US06 envoi des données du formulaire vers la DB)
+
 import './styles/App.css'
 import NouvelObjectif from './components/NouvelObjectif';
 import ProfilUser from './pages/ProfilUsers';
@@ -103,6 +109,7 @@ const App = () => {
             <Route path="/objectifs" element={connecte ? <Objectifs /> : <Navigate to="/inscription" />} className="objectifs" />
             {/* page par défault  */}
             <Route path="*" element={<Default />} />
+<<<<<<< HEAD
             <Route path="/profil" element={connecte ? <Profil /> : <Navigate to="/inscription" />} />
             <Route path="/inscription" element={<Page_compte />} />
             <Route path="/carte" element={connecte ? <Carte /> : <Navigate to="/inscription" />} />

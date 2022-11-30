@@ -2,8 +2,7 @@ import '../styles/App.css'
 import '../styles/objectifs.css'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import Popup from "reactjs-popup";
-import NouvelObjectif from '../components/NouvelObjectif';
+import { useNavigate } from 'react-router-dom';
 
 // Pour effectuer les tests, il faut mettre en commentaire les lignes 1,2 et 4!
 
@@ -163,11 +162,7 @@ function Objectifs() {
         </ul>
 
         <div> 
-        <Popup className="nouvelObjectif" trigger={<button className="nouvelObjectifButton"> Ajouter un objectif personalisé </button>} position="center" size="200%">
-            {close => (
-                <NouvelObjectif/>
-                )}
-            </Popup>
+            <button className="creerObjectif" onClick={navigateToNouvelObjectif}>Créer un objectif personalisé</button>
         </div>
 
         </>
