@@ -145,16 +145,21 @@ function Objectifs() {
             <input type="text" placeholder="Recherche" className="searchedObjectifs" onChange={(e) => setSearchedObjectifs(e.target.value)}></input>
             <p className="searchedObjectifsButton" onClick={rechercherObjectifs}>Rechercher</p>
         </div>
+
         <ul>
             {data.map((objectif) =>
                 <li key={objectif._id} className="objectifs"> <p className="titre-objectifs">{objectif.objectif}</p><i className="fas fa-circle-plus" onClick={() => {ajouterObjectifs(objectif)}}></i></li>
             )}
         </ul>
-        <Popup trigger={<button className="nouvelObjectif"> Ajouter un objectif personalisé </button>} position="center">
+
+        <div> 
+        <Popup className="nouvelObjectif" trigger={<button className="nouvelObjectifButton"> Ajouter un objectif personalisé </button>} position="center" size="200%">
             {close => (
                 <NouvelObjectif/>
                 )}
             </Popup>
+        </div>
+
         </>
     );
 }
