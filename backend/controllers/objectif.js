@@ -3,9 +3,11 @@ const ObjectId = require('mongodb').ObjectID;
 
 
 exports.createObjectif = (req, res, next) => {
+    console.log(req.body);
     const obj = new Objectif({
       ...req.body
     });
+    console.log(obj);
     obj.save().then(
       () => {
         res.status(201).json({

@@ -1,0 +1,30 @@
+
+
+.nouvelObjectif{
+    font-size: 28px;
+    position: center;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px 10px; 
+    line-height: 28px;
+    background-color: #a09f9f;
+    width: 80%;
+    border-radius: 30px;
+}
+
+.titreObjectif{
+    font-size: 28px;
+}
+
+.recurence{
+    font-size: 24px;
+}
+
+.typeSelector{
+    font-size: 28px;
+}
+
+.descriptionObjectif{
+    padding: 20px 10px; 
+    line-height: 28px;
+}
