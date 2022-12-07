@@ -19,41 +19,14 @@ export function checkIfHigherThan0(number) {
 
 
 function Profil() {
-
-    const [data, setData] = useState([]);
+    
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
-
-
-    function function1() {
-        console.log(data)
-    }
-
-    function supprimerObjectifs(objectifToDelete, data) {
-        let arrayObjectif = data;
-        let myIndex = arrayObjectif.indexOf(objectifToDelete);
-        if (checkIfHigherThan0(myIndex)) {
-            arrayObjectif.splice(myIndex, 1);
-        }
-        let query_choisie = { "id": document.cookie, objectifs: arrayObjectif }
-        axios.post("http://localhost:3001/user/objectif", query_choisie).then(alert("Objectif supprimé avec succès !"))
-        window.location.reload(false);
-    };
-
-    let nouveauxObjectifs = [];
-
+    const [objectifs, setObjectifs] = useState([])
     const navigateToHome = () => {
         navigate('/home');
     };
-    const navigateToModifierObjectif = (objectif_name) => {
-        navigate('/modifierObjectif', {state:{name:objectif_name}});
-    };
-
-    const navigateToInscription = () => {
-        navigate('/inscription')
-        //window.location.reload(true)
-    }
 
     useEffect(() => {
         axios.get('http://localhost:3001/getcookie', { withCredentials: true }).then(res => {
@@ -80,16 +53,13 @@ function Profil() {
             })
         }, []);
 
-    function supprimerObjectifs(objectifToDelete) {
-        for (let i = 0; i < objectifs.length; i++) {
-            if (objectifToDelete === "") {
-                return "Veuillez entrer un objectif !"
-            }
-            else if (objectifs[i].name !== objectifToDelete.name) {
-                arrayObjectif.push(objectifs[i])
-            }
+    function supprimerObjectifs(objectifToDelete, objectifs) {
+        let arrayObjectif=objectifs;
+        let myIndex = arrayObjectif.indexOf(objectifToDelete);
+        if (checkIfHigherThan0(myIndex)) {
+            arrayObjectif.splice(myIndex, 1);
         }
-        let query_choisie = {"id" : id, "objectifs" : arrayObjectif}
+        let query_choisie = {"id" : document.cookie, objectifs : arrayObjectif}
         axios.post("http://localhost:3001/user/objectif", query_choisie).then(alert("Objectif supprimé avec succès !"))
         window.location.reload(false);
     };
@@ -127,8 +97,8 @@ function Profil() {
         <h2 className='objectifs-profil'>Mes objectifs</h2>
 
             <ul>
-                {data.map((objectif) =>
-                    <li key={objectif} className="objectifs"> <p className="titre-objectifs">{objectif}</p> <i class="fa-solid fa-eye" onClick={() => { function1() }}></i> <i className="fa-solid fa-circle-xmark" onClick={() => { supprimerObjectifs(objectif, data) }}></i></li>
+                {objectifs.map((objectif) => 
+                    { return <li  className="objectifs"> <p className="titre-objectifs">{objectif.name}</p><i className="fa-solid fa-circle-xmark" onClick={() => {supprimerObjectifs(objectif, objectifs)}}></i></li>}
                 )}
             </ul>
             <p className="deconnexion" onClick={deconnexion}>
