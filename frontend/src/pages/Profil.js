@@ -27,7 +27,10 @@ function Profil() {
     const navigateToHome = () => {
         navigate('/home');
     };
-
+    const navigateToModifierObjectif = (objectif_name) => {
+        console.log(objectif_name)
+        navigate('/modifierObjectif', {state:{name:objectif_name}});
+    };
     useEffect(() => {
         axios.get('http://localhost:3001/getcookie', { withCredentials: true }).then(res => {
             idSession = res.data.Id
@@ -98,7 +101,7 @@ function Profil() {
 
             <ul>
                 {objectifs.map((objectif) => 
-                    { return <li  className="objectifs"> <p className="titre-objectifs">{objectif.name}</p><i className="fa-solid fa-circle-xmark" onClick={() => {supprimerObjectifs(objectif, objectifs)}}></i></li>}
+                    { return <li  className="objectifs" key={objectif.name}> <p className="titre-objectifs">{objectif.name}</p><i className="fa-solid fa-pencil" onClick={()=>{navigateToModifierObjectif(objectif.name)}}></i><i className="fa-solid fa-circle-xmark" onClick={() => {supprimerObjectifs(objectif, objectifs)}}></i></li>}
                 )}
             </ul>
             <p className="deconnexion" onClick={deconnexion}>
