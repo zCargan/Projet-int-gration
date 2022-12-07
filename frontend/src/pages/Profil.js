@@ -8,24 +8,41 @@ import { useNavigate } from 'react-router-dom'
 import Popup from "reactjs-popup";
 import Ville from '../components/Ville'
 
-export function checkIfHigherThan0(number){
-    if(Number.isInteger(number)){
+export function checkIfHigherThan0(number) {
+    if (Number.isInteger(number)) {
         return number >= 0
     }
-    else{
+    else {
         return "Ce n'est pas un nombre"
     }
 }
+
+
 function Profil() {
-    
+
+    const [data, setData] = useState([]);
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
-    const [objectifs, setObjectifs] = useState([])
-    const [id, setId] = useState("");
-    let idSession = ""
 
-    let arrayObjectif = [];
+
+    function function1() {
+        console.log(data)
+    }
+
+    function supprimerObjectifs(objectifToDelete, data) {
+        let arrayObjectif = data;
+        let myIndex = arrayObjectif.indexOf(objectifToDelete);
+        if (checkIfHigherThan0(myIndex)) {
+            arrayObjectif.splice(myIndex, 1);
+        }
+        let query_choisie = { "id": document.cookie, objectifs: arrayObjectif }
+        axios.post("http://localhost:3001/user/objectif", query_choisie).then(alert("Objectif supprimé avec succès !"))
+        window.location.reload(false);
+    };
+
+    let nouveauxObjectifs = [];
+
     const navigateToHome = () => {
         navigate('/home');
     };
@@ -110,8 +127,8 @@ function Profil() {
         <h2 className='objectifs-profil'>Mes objectifs</h2>
 
             <ul>
-                {objectifs.map((objectif) => 
-                    { return <li  className="objectifs" key={objectif.name}> <p className="titre-objectifs">{objectif.name}</p><i className="fa-solid fa-pencil" onClick={()=>{navigateToModifierObjectif(objectif.name)}}></i><i className="fa-solid fa-circle-xmark" onClick={() => {supprimerObjectifs(objectif)}}></i></li>}
+                {data.map((objectif) =>
+                    <li key={objectif} className="objectifs"> <p className="titre-objectifs">{objectif}</p> <i class="fa-solid fa-eye" onClick={() => { function1() }}></i> <i className="fa-solid fa-circle-xmark" onClick={() => { supprimerObjectifs(objectif, data) }}></i></li>
                 )}
             </ul>
             <p className="deconnexion" onClick={deconnexion}>
