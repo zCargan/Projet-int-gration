@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import "../styles/connection.css"
 import "../styles/App.css"
-import { useNavigate } from 'react-router-dom';
 //import { response } from '../../../backend/app';
 
 export function allComplete(string1, string2) {
