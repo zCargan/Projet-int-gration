@@ -28,7 +28,6 @@ function Profil() {
         navigate('/home');
     };
     const navigateToModifierObjectif = (objectif_name) => {
-        console.log(objectif_name)
         navigate('/modifierObjectif', {state:{name:objectif_name}});
     };
     useEffect(() => {

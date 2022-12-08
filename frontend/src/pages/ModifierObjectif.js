@@ -71,26 +71,27 @@ function Objectif  ()  {
                 dataToSend.push(data[i])
             }
         }
-        if (shareBool === "true" || shareBool === "True"){
-            setShareBool(true)
-        }
-        else{
-            setShareBool(false)
-        }
-        if (onProfileBool === "true" || onProfileBool === "True"){
-            setOnProfileBool(true)
-        }
-        else{
-            setOnProfileBool(false)
-        }
         dataToSend.push(newObjectif)
         jsonToSend = {"id" : id, "objectifs" : dataToSend}
         axios.post(`http://localhost:3001/user/objectif`, jsonToSend)
         navigateToProfil()
      }
-
-
-      
+     function changeOnProfileBool(value){
+        if (value === "true"){
+            setOnProfileBool(true)
+        }
+        else{
+            setOnProfileBool(false)
+        }
+     }
+     function changeShareBool(value){
+        if (value === "true"){
+            setShareBool(true)
+        }
+        else{
+            setShareBool(false)
+        }
+     }
       if (clique){
         return(
             <div>
