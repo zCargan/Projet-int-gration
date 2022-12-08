@@ -16,7 +16,7 @@ export function notToLongString(string) {
 }
 
 export function checkEmail(email) {
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
 }
 
@@ -116,13 +116,13 @@ const Inscription = () => {
             if (allNotToLong(username, email, password, samePassword)) {
                 if (allNotXSSInjection(username, email, password, samePassword)) {
                     if (HasAll(password)) {
-                        axios.post("http://localhost:3001/username", infos)
+                        axios.post("http://localhost:3001/user/username", infos)
                             .then(response => {
                                 if (response.data === false) {
                                     alert("Username already used");
                                 } else {
                                     if (checkEmail(email)) {
-                                        axios.post("http://localhost:3001/email", infos)
+                                        axios.post("http://localhost:3001/user/email", infos)
                                             .then(response => {
                                                 if (response.data === false) {
                                                     alert("Email already used")
@@ -130,7 +130,7 @@ const Inscription = () => {
                                                     if (sameString(password, samePassword)) {
                                                         if (HasValidLength(password)) {
                                                             axios
-                                                                .post("http://localhost:3001/inscription", données_envoyées)
+                                                                .post("http://localhost:3001/user/inscription", données_envoyées)
                                                                 .then(response => {
                                                                     if (response.status === 201) {
                                                                         emailjs.sendForm('service_wco0ss6', 'template_f9ar9zo', e.target, 'uX_z-9_6PbAb24o0e')
@@ -140,7 +140,7 @@ const Inscription = () => {
                                                                                 console.log(error.text);
                                                                             });
                                                                         e.target.reset()
-                                                                        alert("Compte créer ! Un email de confirmation vous a été envoyé")
+                                                                        alert("Compte créé ! Un email de confirmation vous a été envoyé")
                                                                         navigateToHome()
                                                                     }
                                                                 });
