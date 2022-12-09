@@ -10,6 +10,8 @@ import Carte from './pages/Carte';
 import Rgpd from './pages/Rgpd'
 import './styles/App.css'
 import NouvelObjectif from './components/NouvelObjectif';
+import ProfilUser from './pages/ProfilUsers';
+import BarreRecherche from './components/BarreDeRecherche'
 
 const App = () => {
   const [connecte, setConnecte] = useState(false);
@@ -106,6 +108,7 @@ const App = () => {
             <Route path="/carte" element={connecte ? <Carte /> : <Navigate to="/inscription" />} />
             <Route path='/nouvel_objectif' element={connecte ? <NouvelObjectif /> : <Navigate to="/inscription" />} />
             <Route path='/rgpd' element={<Rgpd />} />
+>>>>>>> 68a6bae (REF(US09): résolution merge conflits)
           </Routes>
         </div>
       </BrowserRouter>
