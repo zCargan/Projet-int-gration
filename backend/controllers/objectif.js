@@ -4,10 +4,13 @@ const ObjectId = require('mongodb').ObjectID;
 
 exports.createObjectif = (req, res, next) => {
 <<<<<<< HEAD
+<<<<<<< HEAD
     console.log(req.body);
 =======
   console.log(req.body)
 >>>>>>> 7dae96a (Modification ajout objectifs)
+=======
+>>>>>>> c74b836 (REF(US16): résolution merge conflits)
     const obj = new Objectif({
       ...req.body
     });
