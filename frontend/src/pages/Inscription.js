@@ -31,7 +31,6 @@ const Inscription = () => {
             return re.test(email);
         }
 
-
         axios.post("http://localhost:3010/username", infos)
             .then(response => {
                 if (response.data == "not ok") {
@@ -85,6 +84,7 @@ const Inscription = () => {
                     <br />
                     <input type="string" placeholder='Adresse email' onChange={(e) => setEmail(e.target.value)} />
                     <br />
+                    
                     <input type="password" placeholder='Mot de passe' onChange={(e) => setPassword(e.target.value)} />
                     <br />
                     <input type="password" placeholder='Confirmation du mot de passe' onChange={(e) => setSamePassword(e.target.value)} />

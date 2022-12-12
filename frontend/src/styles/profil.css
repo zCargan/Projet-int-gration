@@ -47,10 +47,11 @@
 }
 
 .fa-circle-user{
-    font-size: 700%;
+    font-size: 500%;
     position: absolute;
     left: 25%;
-    top:5%
+    top:5%;
+    margin-left: 0%;
 }
 
 .text{

@@ -16,15 +16,18 @@ router.delete('/:id', userCtrl.deleteUser)
 
 router.get('/', userCtrl.getAllUser)
 
+router.get('/email/:email', userCtrl.getWithMail)
+
 router.post('/email', userCtrl.getOneMail)
 
 router.post('/username', userCtrl.getOneUsername)
 
-router.post('/login', userCtrl.getCookie)
+router.post('/login', userCtrl.login)
 
 router.post('/find', userCtrl.getUserCity)
 
 router.put('/follow/:id', userCtrl.updateUserFollowers)
 
+router.get('/follows', userCtrl.getManyUsers)
 module.exports = router;
 

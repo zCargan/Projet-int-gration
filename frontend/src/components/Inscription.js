@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import axios from 'axios';
 import "../styles/inscription.css"
 import "../styles/App.css"
@@ -72,6 +72,8 @@ const Inscription = () => {
     const passwordHasSpecialCharacter = HasSpecialCharacter(password);
     const passwordHasNumber = HasNumber(password);
     const hashedPassword = bcrypt.hashSync(password, 10);
+    const [villes, setVilles] = useState([]);
+    const [city, setCity] = useState("");
 
 
     /*=========================================== RECUPERE LES VARIABLES DE CREACTION DE COMPTE ===========================================*/
@@ -80,6 +82,17 @@ const Inscription = () => {
     const navigateToHome = () => {
         navigate('/home');
     };
+
+    useEffect(() => {
+        axios.get("http://localhost:3001/ville/commune").then(response => {
+            let array = [];
+            for (let i = 0; i < response.data[0].Villes.length; i++) {
+                array.push(response.data[0].Villes[i])
+                setVilles(array)
+            }
+            array = array.sort()
+        });
+    }, [])
 
     const variables = async (e) => {
         e.preventDefault();
@@ -95,11 +108,10 @@ const Inscription = () => {
             "password": hashedPassword,
             "confirmed": false,
             "objectifs": [],
-            "city": ""
+            "city": city
         }
 
         //variable nécessaire afin d'effectuer à la requete à la db afin de savoir si l'email est déja utilisé ou non
-
 
         if (allComplete(username, email, password, samePassword)) {
             if (allNotToLong(username, email, password, samePassword)) {
@@ -171,6 +183,18 @@ const Inscription = () => {
                 <div className="text_zone">
                     <i className="fa-sharp fa-solid fa-envelope"></i>
                     <input type="string" placeholder='Email du compte' name='user_email' onChange={(e) => setEmail(e.target.value)} />
+                </div>
+                <div className="text_zone">
+                <i class="fa-solid fa-house"></i>
+                <label className="text_zone">Votre Ville : </label>
+                    <select className="selection"value={city} onChange={e => setCity(e.target.value)}>
+                        
+                        <option>Veuillez séléctionnez votre ville </option>
+                        {villes.map((Villes) => (
+                            <option key={Villes}>{Villes}</option>
+                        ))}
+                    </select>
+                    
                 </div>
                 <div className="text_zone">
                     <i className="fa-sharp fa-solid fa-lock"></i>

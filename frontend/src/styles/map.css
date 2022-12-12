@@ -14,3 +14,21 @@
     background-color: #655b5b;
     color: #3d3939
 }
+
+.button{
+    border-radius: 10px;
+    margin: 5px;
+    width: 60%;
+    background-color: #980012;
+    transition: all 0.3s ease-out;
+    text-align: center;
+    color: #d9d9d9;
+    padding: 3px;
+}
+
+.button:hover {
+    background-color: #d9d9d9;
+    color: #980012;
+    transition: all 0.3s ease-out;
+    cursor: pointer;
+}

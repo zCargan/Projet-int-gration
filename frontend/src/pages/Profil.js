@@ -53,7 +53,7 @@ function Profil() {
         window.location.reload(false);
     };
 
-
+console.log(objectifs)
     function deconnexion(){
         axios.get('http://localhost:3001/deletecookie', { withCredentials: true })
             .then(res => {
