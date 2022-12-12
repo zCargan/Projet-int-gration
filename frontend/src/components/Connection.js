@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import "../styles/connection.css"
 import "../styles/App.css"
+import bcrypt from 'bcryptjs'
+
 //import { response } from '../../../backend/app';
 
 const Connection = () => {
@@ -11,6 +13,7 @@ const Connection = () => {
     const [email, setEmail] = useState(null)
     const [mdp, setMdp] = useState(null)
     const navigate = useNavigate();
+    let hashedMDP =""
 
     const navigateToHome = () => {
         // 👇️ navigate to /contacts
@@ -19,16 +22,31 @@ const Connection = () => {
 
     const login_verfif = async (e) => {
         e.preventDefault();
-        let values = {
-            email: email,
-            mdp: mdp
-        };
-        axios.post("http://localhost:3001/user/login", values, { withCredentials: true })
+        axios.get(`http://localhost:3001/user/email/${email}`, { "email": email }).then(res => {
+            hashedMDP=res.data
+            let bool = bcrypt.compareSync(mdp, hashedMDP)
+            if (bool){
+                let mail = {"email":email}
+                axios.post("http://localhost:3001/user/login", mail, { withCredentials: true })
+                    .then(response => {
+                        alert("Vous êtes connecté")
+                        navigateToHome()
+                        window.location.reload(false)
+                    });
+            }
+            else{
+                alert("Mot de passe incorrect")
+            }
+        })
+        
+/*         bcrypt.compare(mdp, hashedMDP)
+ */
+/*         axios.post("http://localhost:3001/user/login", values, { withCredentials: true })
             .then(response => {
                 alert("Vous êtes connecté")
                 navigateToHome()
                 window.location.reload(false)
-            });
+            }); */
     }
     return (
 

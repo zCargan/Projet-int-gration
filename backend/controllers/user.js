@@ -143,18 +143,24 @@ exports.getAllUser = (req, res, next) => {
     );
   };
 
-  exports.getOneMail = (req, res) => {
-    User.findOne({ email: req.body.email })
+  exports.getWithMail = (req, res) => {
+    User.findOne({ email: req.params.email })
         .then(response => {
-            if (!response) {
-                return res.send(true)
-            }
-            else {
-                return res.send(false)
-            }
+              return res.send(response.password)
+
         })
 }
-
+exports.getOneMail = (req, res) => {
+  User.findOne({ email: req.body.email })
+      .then(response => {
+          if (!response) {
+              return res.send(true)
+          }
+          else {
+              return res.send(false)
+          }
+      })
+}
   exports.getOneUsername = (req, res) => {
     User.findOne({ username: req.body.username })
         .then(response => {
@@ -167,13 +173,9 @@ exports.getAllUser = (req, res, next) => {
         })
 }
 
-  exports.login = (req, res ,next) => {
+exports.login = (req, res ,next) => {
     User.findOne({ email: req.body.email})
     .then(response => {
-        if(!response){
-          return res.status(401).json({ error: 'Utilisateur non trouvé !' });
-        }
-        if (req.body.mdp == response.password) {
           res.cookie('Id', response._id.toString(), {
               maxAge: 500000,
               // expires works the same as the maxAge
@@ -182,11 +184,6 @@ exports.getAllUser = (req, res, next) => {
               sameSite: 'lax'
           });
           return res.status(200).json(response);
-      }
-        else{
-          return res.status(401).json({ error: 'Mot de passe incorrect !' });
-      }
-
     })
   }
 
@@ -195,4 +192,12 @@ exports.getUserCity = (req, res) => {
   User.find({ "city": ville }).then(response => {
       res.status(200).json(response)
   })
+}
+
+exports.getManyUsers =(req, res)=>{
+  id=req.params.id
+  User.find({ quantity: { $in: id } }).then(response => {
+    res.status(200).json(response)
+})
+
 }

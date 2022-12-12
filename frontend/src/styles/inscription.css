@@ -15,7 +15,7 @@
     margin: 5px;
     width: 95%;
     background-color: #655b5b;
-
+    color: #d9d9d9;
 }
 
 .text_zone input{
@@ -43,4 +43,13 @@
     transition: all 0.3s ease-out; 
     cursor: pointer;
     border: none;
+}
+
+.selection{
+    border-color: #655b5b;
+    color:#d9d9d9;
+    background-color: #655b5b;
+    cursor: pointer;
+    border:solid 1px;
+    padding: 1px;
 }

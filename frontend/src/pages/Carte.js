@@ -23,14 +23,17 @@ const Carte = () => {
     let id = document.cookie.split("=")[1];
     axios.get(`http://localhost:3001/user/${id}`, { params: { "id": document.cookie } }).then(res => {
         setCity(res.data.city)
+        console.log(res.data.city)
     })
 
     const chercher = async (e) => {
         axios.post('http://localhost:3001/user/find', { "city": city }).then(response => {
             const array_user = [];
             for (let i = 0; i < response.data.length; i++) {
-                array_user.push(response.data[i].username);
 
+                if (response.data[i]._id!==id){
+                    array_user.push(response.data[i].username);
+                }
             }
             setUsers(array_user)
         });
@@ -43,11 +46,6 @@ const Carte = () => {
                 <h1>
                     Trouver des gens prêt de chez vous !
                 </h1>
-            </div>
-            <div>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis impedit id incidunt recusandae tempora quas suscipit saepe temporibus? Recusandae expedita pariatur saepe quo amet distinctio inventore, tenetur eaque impedit officiis.
-                </p>
             </div>
             <div>
                 <h2>
@@ -66,12 +64,13 @@ const Carte = () => {
             </div>
             <br />
             <div>
-                <button onClick={(e) => LouvainLaNeuve()}> Centrer sur Louvain La Neuve </button>
+                <button className="button" onClick={(e) => LouvainLaNeuve()}> Centrer sur Louvain La Neuve </button>
             </div>
             <br />
             <div className='find_user'>
+                <br></br>
                 <div>
-                    <label onClick={chercher}>Trouver des gens prêt de chez moi</label>
+                    <label className="button" onClick={chercher}>Trouver des gens prêt de chez moi</label>
                 </div>
                 <br />
                 <div>
@@ -79,7 +78,7 @@ const Carte = () => {
                     <br />
                     <br />
                     {users.map((user, n) => (
-                        <div>
+                        <div    key={n}>
                             <h4>Utilisateur {n + 1}: {user} </h4>
                         </div>
                     ))}

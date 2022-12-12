@@ -26,11 +26,6 @@ function Navbar() {
                             </NavLink>
                         </li>
                         <li className='nav-item'>
-                            <NavLink to="/adefinir" className={(state) => state.isActive ? 'nav-links-active' : 'nav-links'}>
-                                ?
-                            </NavLink>
-                        </li>
-                        <li className='nav-item'>
                             <NavLink to="/inscription" className={(state) => state.isActive ? 'nav-links-mobile-active' : 'nav-links-mobile'}>
                                 Sign Up
                             </NavLink>
@@ -68,8 +63,8 @@ function Navbar() {
                         </NavLink>
                     </li>
                     <li className='nav-item'>
-                        <NavLink to="/adefinir" className={(state) => state.isActive ? 'nav-links-active' : 'nav-links'}>
-                            ?
+                        <NavLink to="/fil_actualite" className={(state) => state.isActive ? 'nav-links-active' : 'nav-links'}>
+                            Fil d'actualité
                         </NavLink>
                     </li>
                     <li className='nav-item'>

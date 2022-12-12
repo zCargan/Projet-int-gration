@@ -9,7 +9,7 @@ import Profil from './pages/Profil';
 import Carte from './pages/Carte';
 import Rgpd from './pages/Rgpd'
 import ModifierObjectif from './pages/ModifierObjectif';
-
+import Fil_actualite from "./pages/fil_d'actu"
 import './styles/App.css'
 import NouvelObjectif from './components/NouvelObjectif';
 import ProfilUser from './pages/ProfilUsers';
@@ -42,6 +42,7 @@ const App = () => {
             <Route path='/rgpd' element={<Rgpd />} />
             <Route path='/profilUser' element={<ProfilUser />} />
             <Route path="/modifierObjectif" element={<ModifierObjectif/>}/>
+            <Route path="/fil_actualite" element={<Fil_actualite/>}/>
           </Routes>
         </div>
       </BrowserRouter>
