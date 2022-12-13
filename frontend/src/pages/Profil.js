@@ -30,6 +30,7 @@ function Profil() {
         navigate('/modifierObjectif', {state:{name:objectif_name}});
     };
     useEffect(() => {
+        
         let id = document.cookie.split("=")[1];
         axios.get(`http://localhost:3001/user/${id}`, { params: { "id": document.cookie } }).then(res => {
             setObjectifs(res.data.objectifs)
