@@ -7,6 +7,9 @@ import Navbar from './components/navbar';
 import Default from './pages/default';
 import Profil from './pages/Profil';
 import Carte from './pages/Carte';
+import Rgpd from './pages/Rgpd'
+import ModifierObjectif from './pages/ModifierObjectif';
+
 import './styles/App.css'
 import NouvelObjectif from './components/NouvelObjectif';
 import ProfilUser from './pages/ProfilUsers';
@@ -107,6 +110,8 @@ const App = () => {
             <Route path="/carte" element={connecte ? <Carte /> : <Navigate to="/inscription" />} />
             <Route path='/nouvel_objectif' element={connecte ? <NouvelObjectif /> : <Navigate to="/inscription" />} />
             <Route path='/rgpd' element={<Rgpd />} />
+            <Route path='/profilUser' element={<ProfilUser />} />
+            <Route path="/modifierObjectif" element={<ModifierObjectif/>}/>
           </Routes>
         </div>
       </BrowserRouter>

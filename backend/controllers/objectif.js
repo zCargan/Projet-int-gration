@@ -1,20 +1,8 @@
 const Objectif = require('../models/objectif')
-const ObjectId = require('mongodb').ObjectID;
 
 
 exports.createObjectif = (req, res, next) => {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
     console.log(req.body);
-=======
-  console.log(req.body)
->>>>>>> 7dae96a (Modification ajout objectifs)
-=======
->>>>>>> c74b836 (REF(US16): résolution merge conflits)
-=======
-    console.log(req.body);
->>>>>>> 8fce099 (US06 envoi des données du formulaire vers la DB)
     const obj = new Objectif({
       ...req.body
     });
@@ -36,7 +24,7 @@ exports.createObjectif = (req, res, next) => {
 
 exports.getOneObjectif = (req, res, next) => {
     Objectif.findOne({
-      objectif: req.params.name
+      _id: req.params.id
     }).then(
       (obj) => {
         res.status(200).json(obj);
@@ -52,13 +40,12 @@ exports.getOneObjectif = (req, res, next) => {
   
 exports.modifyObjectif = (req, res, next) => {
     const obj = new Objectif({
-      _id: ObjectId(req.body._id),
+      _id: req.params.id,
       type: req.body.type,
       objectif: req.body.objectif,
       description: req.body.description,
     });
-    let id_json = {_id: ObjectId(req.body._id)}
-    Objectif.updateOne(id_json, {$set:obj}).then(
+    Objectif.updateOne({_id: req.params.id}, obj).then(
       () => {
         res.status(201).json({
           message: 'Objectif updated successfully!'
