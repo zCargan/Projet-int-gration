@@ -4,7 +4,6 @@ import RGPD from '../components/RGPD';
 
 
 const Default = () => {
-
     return (
         <div className='div_global'>
             <div>
@@ -19,6 +18,7 @@ const Default = () => {
                     Nous avons voulu pousser la communauté 
                 </p>
             </div>
+            
             <div>
                 <RGPD />
             </div>

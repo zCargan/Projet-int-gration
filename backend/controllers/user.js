@@ -1,4 +1,6 @@
 const User = require("../models/user");
+const Papa = require("papaparse");
+const fs = require("fs");
 
 const app = require("../app");
 const mongoose = require('mongoose');
@@ -179,9 +181,10 @@ exports.login = (req, res ,next) => {
           res.cookie('Id', response._id.toString(), {
               maxAge: 500000,
               // expires works the same as the maxAge
-              secure: false, // mettre l'attribut à true une fois que le site est en HTTPS
+              secure: true, // mettre l'attribut à true une fois que le site est en HTTPS
               // httpOnly: true,
-              sameSite: 'lax'
+              sameSite: 'lax',
+              // signed: true,
           });
           return res.status(200).json(response);
     })

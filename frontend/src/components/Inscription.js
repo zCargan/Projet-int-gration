@@ -71,7 +71,8 @@ const Inscription = () => {
     const passwordHasUppercaseLetter = HasUpperCaseLetter(password);
     const passwordHasSpecialCharacter = HasSpecialCharacter(password);
     const passwordHasNumber = HasNumber(password);
-    const hashedPassword = bcrypt.hashSync(password, 10);
+    const salt = bcrypt.genSaltSync(10)
+    const hashedPassword = bcrypt.hashSync(password, salt);
     const [villes, setVilles] = useState([]);
     const [city, setCity] = useState("");
 

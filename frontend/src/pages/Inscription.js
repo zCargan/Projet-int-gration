@@ -94,8 +94,7 @@ const Inscription = () => {
                     </button>
                 </form>
             </div>
-
-
+           
         </div>
 
     );

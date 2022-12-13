@@ -20,7 +20,7 @@ const Connection = () => {
         navigate('/home');
     };
 
-    const login_verfif = async (e) => {
+    const login_verif = async (e) => {
         e.preventDefault();
         axios.get(`http://localhost:3001/user/email/${email}`, { "email": email }).then(res => {
             hashedMDP=res.data
@@ -61,7 +61,7 @@ const Connection = () => {
                     <i className="fa-sharp fa-solid fa-lock"></i>
                     <input type="password" placeholder='Mot de passe' onChange={(e) => setMdp(e.target.value)} />
                 </div>
-                <div className="text_zone_button" onClick={login_verfif}>
+                <div className="text_zone_button" onClick={login_verif}>
                     Connexion
                 </div>
                 <div className="text_zone_button">
