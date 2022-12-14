@@ -10,41 +10,50 @@ function NouvelObjectif(){
     const [recurence, setRecurence] = useState("");
     const [type, setType] = useState("");
     const [onProfile, setOnProfile] = useState("");
+    const [share, setShare] = useState("");
 
     
     let id = document.cookie.split("=")[1];
 
     const send = async(e) => {
+        e.preventDefault();
 
         let ArrayObjectifs = []
-        console.log(ArrayObjectifs.length)
 
         let dataUser = {
             "name" : titre,
             "description" : description,
             "type" : type,
             "frequence" : recurence,
-            "onProfile" : true,
-            "share" : true
+            "onProfile" : onProfile,
+            "share" : share
 
         }
+
 
         const dataObjectif = {
             "type" : type,
             "objectif" : titre,
         }        
 
-        axios.post("http://localhost:3001/objectif/",
+        if(dataUser.share){
+            await axios.post("http://localhost:3001/objectif/",
             dataObjectif
-        )
-        .catch(err => console.warn(err));
+            )
+            .catch(err => console.warn(err));
+        }
 
-        axios.get(`http://localhost:3001/user/${id}`, {params : {"id" : document.cookie}}).then(res => {
+        
+
+        
+
+        await axios.get(`http://localhost:3001/user/${id}`, {params : {"id" : document.cookie}}).then(res => {
             for (let i = 0; i < res.data.objectifs.length; i++){
                 ArrayObjectifs.push(res.data.objectifs[i])
             }
         
            ArrayObjectifs.push(dataUser)
+
 
             let jsonToSend = {"id" : id, "objectifs" : ArrayObjectifs}
 
@@ -53,7 +62,6 @@ function NouvelObjectif(){
         })
         .catch(err => console.warn(err));
 
-        console.log("3",ArrayObjectifs)
 
         
         window.location.reload(false);
@@ -62,7 +70,7 @@ function NouvelObjectif(){
 
     return(
         <div className="nouvelObjectif">
-            <form>
+            <form onSubmit={send}>
                     <h2>Créer un objectif : </h2>
                     <label>Titre de l'objectif : </label>
                     <br></br>
@@ -81,7 +89,7 @@ function NouvelObjectif(){
                     <br></br>
                     <label>Type d'objectif</label>
                     <br></br>
-                    <select id="type" value={type} defaultValue={"Sportif"} onChange={(e) => setType(e.target.value)}>
+                    <select id="type" value={type} onChange={(e) => setType(e.target.value)}>
                         <option>Sportif</option>
                         <option>Alimentaire</option>
                         <option>Intellectuel</option>
@@ -89,10 +97,18 @@ function NouvelObjectif(){
                     <br></br>
                     <br></br>
                     <label>Rendre l'objectif privé ? </label>
-                    {/* <br></br>
-                    <br></br> */}
+                    <br></br>
+                    <br></br>
                     <label className="switch">
                     <input type="checkbox" onChange={(e) => setOnProfile(e.target.value)}/>
+                    <span></span></label>
+                    <br></br>
+                    <br></br>
+                    <label>Partager l'objectif a tout le monde ? </label>
+                    <br></br>
+                    <br></br>
+                    <label className="switch">
+                    <input type="checkbox" onChange={(e) => setShare(e.target.value)}/>
                     <span></span></label>
                     <br></br>
                     <br></br>
@@ -100,8 +116,8 @@ function NouvelObjectif(){
                     <br></br>
                     <input type="text" className="descriptionObjectif" onChange={(e) => setDescription(e.target.value)}/>
                     <br></br>
+                    <button type="submit" className="button_submit">Valider</button>
                 </form>
-                <button onClick={() => {send()}} className="button_submit">Valider</button>
             </div>
     )
 };
