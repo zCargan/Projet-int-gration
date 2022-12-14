@@ -17,7 +17,6 @@ exports.getDonnees = (req, res, next) => {
     })
 }
 
-
 exports.getAllDonnees = (req, res, next) => {
     Donnees.find().then(
       (donnee) => {
