@@ -13,7 +13,8 @@ function Fil_actualite() {
     let onProfile = true;
     let share = true;
     let type;
-
+    const [id, setId] = useState("");
+    let idSession = ""
     let nouveauxObjectifs = [];
     let objectifUser;
 
@@ -22,31 +23,36 @@ function Fil_actualite() {
         return Math.floor(Math.random() * max);
       }
     useEffect(() => {
-        let id = document.cookie.split("=")[1];
         let object ={}
-        axios.get(`http://localhost:3001/user/${id}`, { params: { "id": document.cookie } }).then(res => {
-            follows=res.data.userfollows    
-        })
-        axios.get('http://localhost:3001/user').then(res =>{
-            for (let i = 0; i<follows.length;i++){
-                for (let j = 0; j < res.data.length ;j++){
-                    if (res.data[j]._id === follows[i] ){
-                        if (res.data[j].objectifs.length !==0){
-                            for (let k = 0; k < res.data[j].objectifs.length ;k++){
-                                if(res.data[j].objectifs[k].onProfile){
-                                    object = {username : res.data[j].username, objectif : res.data[j].objectifs[k]}
-                                    arrayUser.push(object)
+        axios.get('http://localhost:3001/getcookie', { withCredentials: true }).then(res => {
+            idSession=res.data.Id
+            axios.get(`http://localhost:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
+                setId (response.data.idUser)
+                axios.get(`http://localhost:3001/user/${response.data.idUser}`, { params: { "id": response.data.idUser } }).then(res => {
+                    follows=res.data.userfollows    
+                })
+                axios.get('http://localhost:3001/user').then(res =>{
+                for (let i = 0; i<follows.length;i++){
+                    for (let j = 0; j < res.data.length ;j++){
+                        if (res.data[j]._id === follows[i] ){
+                            if (res.data[j].objectifs.length !==0){
+                                for (let k = 0; k < res.data[j].objectifs.length ;k++){
+                                    if(res.data[j].objectifs[k].onProfile){
+                                        object = {username : res.data[j].username, objectif : res.data[j].objectifs[k]}
+                                        arrayUser.push(object)
+                                    }
                                 }
                             }
                         }
                     }
                 }
-            }
-            setInfoFollows(arrayUser)
+                setInfoFollows(arrayUser)
+                })
+            })
         })
+        
     }, []);  
     function ajouterObjectifs(params) {
-        let id = document.cookie.split("=")[1];
         let verifie = true;
         for (let i = 0; i < nouveauxObjectifs.length; i++) {
             if (params === "") {

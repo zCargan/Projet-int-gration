@@ -28,20 +28,25 @@ function Objectifs() {
     let onProfile = true;
     let share = true;
     let type;
-
+    const [id, setId] = useState("");
+    let idSession = ""
     let nouveauxObjectifs = [];
     let objectifUser;
 
     useEffect(() => {
-        let id = document.cookie.split("=")[1];
-        axios.get(`http://localhost:3001/user/${id}`, {params: {"id" : document.cookie}}).then(res => {
+        axios.get('http://localhost:3001/getcookie', { withCredentials: true }).then(res => {
+            idSession=res.data.Id
+            axios.get(`http://localhost:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
+                setId (response.data.idUser)
+            })
+        })
+        axios.get(`http://localhost:3001/user/${id}`, {params: {"id" : id}}).then(res => {
             for (let i = 0; i < res.data.objectifs.length; i++){
                 nouveauxObjectifs.push(res.data.objectifs[i])
             }
         })});
 
     function ajouterObjectifs(params) {
-        let id = document.cookie.split("=")[1];
         let verifie = true;
         for (let i = 0; i < nouveauxObjectifs.length; i++) {
             if (params === "") {

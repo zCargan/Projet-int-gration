@@ -2,12 +2,33 @@ import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import logo from '../images//logoNewMe2.ico';
 import "../styles/navbar.css"
+import axios from 'axios';
 
 function Navbar() {
     const [click, setClick] = useState(false);
-
+    const [id, setId] = useState("");
+    let idSession = ""
     const handleClick = () => setClick(!click);
-    if (document.cookie === ''){
+    const [connecte, setConnecte] = useState(false);
+
+    axios.get('http://localhost:3001/getcookie', { withCredentials: true }).then(res => {
+        idSession=res.data.Id
+        if (typeof(idSession) !== "string"){
+            console.log("pas connecté")
+          }
+          else{
+            axios.get(`http://localhost:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
+                if (response.data === null){
+                    console.log("pas connecté")
+                }
+                else{
+                    setId (response.data.idUser)
+                    setConnecte(true)
+                }
+          })
+          }
+    })
+    if (!connecte){
         return (
             <nav className={click ? 'navbar-active' : 'navbar'}>
                 <div className='navbar-container'>

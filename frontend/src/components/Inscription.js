@@ -186,7 +186,7 @@ const Inscription = () => {
                     <input type="string" placeholder='Email du compte' name='user_email' onChange={(e) => setEmail(e.target.value)} />
                 </div>
                 <div className="text_zone">
-                <i class="fa-solid fa-house"></i>
+                <i className="fa-solid fa-house"></i>
                 <label className="text_zone">Votre Ville : </label>
                     <select className="selection"value={city} onChange={e => setCity(e.target.value)}>
                         

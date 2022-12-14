@@ -14,37 +14,43 @@ function Objectif  ()  {
     const [shareBool, setShareBool] = useState(false)
     const [onProfileBool, setOnProfileBool] = useState(false)
     const [data, setData] = useState([])
+    const [id, setId] = useState("");
+    let idSession = ""
     let newObjectif = {}
     let jsonToSend = {}
     const navigate = useNavigate();
-    let id = document.cookie.split("=")[1];
     let objectif_name = location.state.name
     const navigateToProfil = () => {
         navigate('/profil');
       };
     useEffect(() => {
-
-        axios.get(`http://localhost:3001/user/${id}`, { params: { "id": id } }).then(res => {
-            for (let i=0 ; i < res.data.objectifs.length;i++){
-                if (res.data.objectifs[i].name===objectif_name){
-                    setName(res.data.objectifs[i].name)
-                    setFrequence(res.data.objectifs[i].frequence)
-                    if (res.data.objectifs[i].onProfile){
-                        setOnProfileBool(true)
+        axios.get('http://localhost:3001/getcookie', { withCredentials: true }).then(res => {
+            idSession=res.data.Id   
+              axios.get(`http://localhost:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
+                setId (response.data.idUser)
+                axios.get(`http://localhost:3001/user/${response.data.idUser}`, { params: { "id": response.data.idUser } }).then(res => {
+                    for (let i=0 ; i < res.data.objectifs.length;i++){
+                        if (res.data.objectifs[i].name===objectif_name){
+                            setName(res.data.objectifs[i].name)
+                            setFrequence(res.data.objectifs[i].frequence)
+                            if (res.data.objectifs[i].onProfile){
+                                setOnProfileBool(true)
+                            }
+                            if (res.data.objectifs[i].share ){
+                                setShareBool(true)
+                            }
+                            setDescription(res.data.objectifs[i].description)
+                            setType(res.data.objectifs[i].type)
+                            i= res.data.objectifs.length
+                        }
                     }
-                    if (res.data.objectifs[i].share ){
-                        setShareBool(true)
-                    }
-                    setDescription(res.data.objectifs[i].description)
-                    setType(res.data.objectifs[i].type)
-                    i= res.data.objectifs.length
-                }
-            }
 
-        })
-        axios.get(`http://localhost:3001/user/${id}`).then(res => {
-            setData(res.data.objectifs)
-         })
+                })
+                axios.get(`http://localhost:3001/user/${response.data.idUser}`).then(res => {
+                    setData(res.data.objectifs)
+                })
+            })
+          })
     }, []);
 
     function truc(){
@@ -52,8 +58,6 @@ function Objectif  ()  {
     }
 
     function sendData (){
-        console.log(onProfileBool)
-        console.log(shareBool)
         let dataToSend =[]
         newObjectif = { "name":name,"description":description, "type":type, "frequence":frequence, "onProfile":onProfileBool, "share":shareBool }
         for (let i=0; i<data.length ;i++){

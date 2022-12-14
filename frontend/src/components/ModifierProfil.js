@@ -18,15 +18,25 @@ const ModifierProfil = () => {
     const [email, setEmail] = useState("");
     const [basePseudo, setBasePseudo] = useState("");
     const [baseEmail, setBaseEmail] = useState("");
+    const [id, setId] = useState("");
+    let idSession = ""
     useEffect(() => {
-        axios.get('http://localhost:3001/user', {params: {"id" : document.cookie}}).then(res => {
-            setBasePseudo(res.data.username)
-            setBaseEmail(res.data.email)
-        })}, []);
+        axios.get('http://localhost:3001/getcookie', { withCredentials: true }).then(res => {
+            idSession=res.data.Id
+            axios.get(`http://localhost:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
+                setId (response.data.idUser)
+                axios.get(`http://localhost:3001/user/${response.data.idUser}`, {params: {"id" : response.data.idUser}}).then(res => {
+                    setBasePseudo(res.data.username)
+                    setBaseEmail(res.data.email)
+                })
+            })
+        })
+
+    }, []);
     const test = async (e) => {
         e.preventDefault();
         const infos = {
-            id : document.cookie,
+            id : id,
             username : pseudo,
             email : email
         }

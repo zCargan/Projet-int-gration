@@ -1,12 +1,9 @@
 const User = require("../models/user");
-const Papa = require("papaparse");
 const fs = require("fs");
 
-const app = require("../app");
 const mongoose = require('mongoose');
 const ObjectId = require('mongodb').ObjectID;
-const cookieParser = require('cookie-parser')
-
+const Session = require("../models/session")
 
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var xhr = new XMLHttpRequest();
@@ -117,7 +114,7 @@ exports.getCookie = (req, res) => {
     }
     if (req.body.mdp == response.password){
         res.cookie('Id', response._id.toString() ,{
-            maxAge: 5000000,
+            maxAge: 60 * 60 * 1000,
             // expires works the same as the maxAge
             secure: false, // mettre l'attribut à true une fois que le site est en HTTPS
             // httpOnly: true,
@@ -178,16 +175,22 @@ exports.getOneMail = (req, res) => {
 exports.login = (req, res ,next) => {
     User.findOne({ email: req.body.email})
     .then(response => {
-          res.cookie('Id', response._id.toString(), {
+    const test = new Session({
+        idUser : response._id.toString(),
+        time: new Date()
+      })
+      test.save()
+          res.cookie('Id', test._id.toString(), {
               maxAge: 500000,
               // expires works the same as the maxAge
               secure: true, // mettre l'attribut à true une fois que le site est en HTTPS
-              // httpOnly: true,
-              sameSite: 'lax',
-              // signed: true,
+              httpOnly: true,
+              sameSite: 'none',
+              signed: true,
           });
           return res.status(200).json(response);
     })
+
   }
 
 exports.getUserCity = (req, res) => {

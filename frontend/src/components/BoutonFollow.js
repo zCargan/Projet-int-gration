@@ -12,33 +12,34 @@ function ButtonFollow (params){
     const userId = useLocation();
     const [bouton, setBouton] = useState()
     const [newUsersFollows, setData] = useState([]);
-
+    const [connecte, setConnecte] = useState(false);
+    const [id, setId] = useState("");
+    let idSession = ""
    
     useEffect(() => {
-        let id = document.cookie.split("=")[1];
-        console.log("je suis le useEffect")
-        axios.get(`http://localhost:3001/user/${id}`).then(res => {
-            console.log(res.data.userfollows)
-           setData(res.data.userfollows)
-           console.log(newUsersFollows)
-           
-            if(newUsersFollows.includes(userId.state._id)){
-                setBouton(false);
-                console.log('Le bouton est set sur false')
-            }
-            else{
-                console.log(newUsersFollows)
-                setBouton(true);
-                console.log("Pas dans l'array")
-            };
-          
+        axios.get('http://localhost:3001/getcookie', { withCredentials: true }).then(res => {
+            idSession=res.data.Id
+              axios.get(`http://localhost:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
+                setId (response.data.idUser)
+                axios.get(`http://localhost:3001/user/${id}`).then(res => {
+                   setData(res.data.userfollows)
+                   
+                    if(newUsersFollows.includes(userId.state._id)){
+                        setBouton(false);
+                    }
+                    else{
+                        setBouton(true);
+                    };
+            })
+          })
+
+
         }).catch(err => console.log(err));
     }, [bouton])
     
     
 
     function suivreFollow(){
-        let id = document.cookie.split("=")[1];
         if( newUsersFollows.includes(userId.state._id) ){
             newUsersFollows.splice(newUsersFollows.indexOf(userId.state._id),1)
             axios.put(`http://localhost:3001/user/${id}`, {userfollows : newUsersFollows}).then(alert("Utilisateur retiré"))
