@@ -63,10 +63,10 @@ function Profil() {
         console.log(id)
         axios.get('http://localhost:3001/deletecookie', { params: { "id":id } }, { withCredentials: true })
             .then(res => {
-                navigateToHome()
-                window.location.reload(false)
             }
             )
+            navigateToHome()
+            window.location.reload(false)
     }
 
     return (

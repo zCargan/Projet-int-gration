@@ -7,13 +7,15 @@ import bcrypt from 'bcryptjs'
 
 //import { response } from '../../../backend/app';
 
-const Connection = () => {
+export function allComplete(string1, string2) {
+    return !((string1 === "") || (string2 === ""))
+}
 
+const Connection = () => {
 
     const [email, setEmail] = useState(null)
     const [mdp, setMdp] = useState(null)
     const navigate = useNavigate();
-    let hashedMDP =""
 
     const navigateToHome = () => {
         // 👇️ navigate to /contacts
@@ -21,32 +23,27 @@ const Connection = () => {
     };
 
     const login_verif = async (e) => {
-        e.preventDefault();
-        axios.get(`http://localhost:3001/user/email/${email}`, { "email": email }).then(res => {
-            hashedMDP=res.data
-            let bool = bcrypt.compareSync(mdp, hashedMDP)
-            if (bool){
-                let mail = {"email":email}
-                axios.post("http://localhost:3001/user/login", mail, { withCredentials: true })
-                    .then(response => {
-                        alert("Vous êtes connecté")
-                        navigateToHome()
-                        window.location.reload(false)
-                    });
+        if(allComplete(email, mdp)) {
+            e.preventDefault();
+            const hashedPassword = bcrypt.hashSync(mdp, "$2a$10$sZk/IsTrgMV.iO0dRgU/xu");        
+            let values = {
+                "email":email,
+                "password": hashedPassword
             }
-            else{
-                alert("Mot de passe incorrect")
-            }
-        })
+            axios.post("http://localhost:3001/user/login", values, { withCredentials: true })
+                .then(response => {
+                    alert("Vous êtes connecté")
+                    navigateToHome()
+                    window.location.reload(false)
+                })
+                .catch(response => {
+                    console.log(response.response.status)
+                    alert("Email ou mot de passe incorrect")
+                })
+        } else {
+            alert("Veuillez compléter tous les champs")
+        }
         
-/*         bcrypt.compare(mdp, hashedMDP)
- */
-/*         axios.post("http://localhost:3001/user/login", values, { withCredentials: true })
-            .then(response => {
-                alert("Vous êtes connecté")
-                navigateToHome()
-                window.location.reload(false)
-            }); */
     }
     return (
 

@@ -1,9 +1,9 @@
 const User = require("../models/user");
 const fs = require("fs");
-
 const mongoose = require('mongoose');
 const ObjectId = require('mongodb').ObjectID;
 const Session = require("../models/session")
+const argon2 = require('argon2');
 
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var xhr = new XMLHttpRequest();
@@ -12,12 +12,24 @@ xhr.withCredentials = true;
 xhr.send(null);
 
 exports.createUser = (req, res) => {
-  const test = new User({
-      ...req.body
+  let username = req.body.username;
+  let email = req.body.email;
+  argon2.hash(req.body.password).then( passwordhashed => {
+    let objectifs = req.body.objectifs
+    let userfollows = req.body.userfollows
+    let city = req.body.city
+    const test = new User({
+      "username" : username,
+      "email" : email,
+      "password":passwordhashed,
+      "objectifs": objectifs,
+      "userfollows":userfollows,
+      "city" : city
+    })
+    test.save()
+        .then(() => res.status(201).json({ message: 'utilisateur ajouté' }))
+        .catch(error => res.status(400).json({ error }));
   })
-  test.save()
-      .then(() => res.status(201).json({ message: 'utilisateur ajouté' }))
-      .catch(error => res.status(400).json({ error }));
 };
 
 exports.getOneUser = (req, res, next) => {
@@ -172,15 +184,21 @@ exports.getOneMail = (req, res) => {
         })
 }
 
+
+
+
 exports.login = (req, res ,next) => {
-    User.findOne({ email: req.body.email})
+  User.findOne({ email: req.body.email})
     .then(response => {
-    const test = new Session({
-        idUser : response._id.toString(),
-        time: new Date()
-      })
-      test.save()
-          res.cookie('Id', test._id.toString(), {
+      argon2.verify(response.password, req.body.password)
+      .then(mdp =>{
+        if(mdp) {
+          const session = new Session({
+            idUser : response._id.toString(),
+            time: new Date()
+          })
+          session.save()
+          res.cookie('Id', session._id.toString(), {
               maxAge: 500000,
               // expires works the same as the maxAge
               secure: true, // mettre l'attribut à true une fois que le site est en HTTPS
@@ -188,10 +206,19 @@ exports.login = (req, res ,next) => {
               sameSite: 'none',
               signed: true,
           });
-          return res.status(200).json(response);
+          res.status(200).json(mdp);
+        }
+        else{
+          res.status(401).json();
+        }
+      })
     })
-
+    .catch((error) => {
+      res.status(401).json();
+    })
   }
+
+
 
 exports.getUserCity = (req, res) => {
   let ville = req.body.city;
