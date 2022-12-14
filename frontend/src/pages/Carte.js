@@ -14,16 +14,20 @@ const Carte = () => {
     const [city, setCity] = useState("");
     const location = Localisation;
     const [users, setUsers] = useState([]);
-
+    const [id, setId] = useState("");
+    let idSession = ""
     function LouvainLaNeuve() {
         setPosition0(LouvainLaNeuveLonLat)
         setZoom0(LouvainLaNeuveZoom)
     }
-
-    let id = document.cookie.split("=")[1];
-    axios.get(`http://localhost:3001/user/${id}`, { params: { "id": document.cookie } }).then(res => {
+    axios.get('http://localhost:3001/getcookie', { withCredentials: true }).then(res => {
+        idSession=res.data.Id
+        axios.get(`http://localhost:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
+            setId (response.data.idUser)
+        })
+    })
+    axios.get(`http://localhost:3001/user/${id}`, { params: { "id": id } }).then(res => {
         setCity(res.data.city)
-        console.log(res.data.city)
     })
 
     const chercher = async (e) => {

@@ -13,9 +13,10 @@ const Ville = () => {
     const [confirmed, setConfirmed] = useState("");
     const [objectifs, setObjectifs] = useState("");
     const [city, setCity] = useState("");
+    const [id, setId] = useState("");
+    let idSession = ""
 
-
-    const donnees_a_jour = {
+    let donnees_a_jour = {
         "username": username,
         "email": email,
         "password": password,
@@ -26,7 +27,6 @@ const Ville = () => {
 
 
     useEffect(() => {
-        let id = document.cookie.split("=")[1];
         axios.get("http://localhost:3001/ville/commune").then(response => {
             let array = [];
             for (let i = 0; i < response.data[0].Villes.length; i++) {
@@ -35,18 +35,32 @@ const Ville = () => {
             }
             array = array.sort()
         });
-        axios.get(`http://localhost:3001/user/${id}`, { params: { "id": document.cookie } }).then(res => {
-            setUsername(res.data.username)
-            setEmail(res.data.email)
-            setPassword(res.data.password)
-            setObjectifs(res.data.objectifs)
-            setConfirmed(res.data.confirmed)
-            setCity(res.data.city)
+        axios.get('http://localhost:3001/getcookie', { withCredentials: true }).then(res => {
+            idSession=res.data.Id
+            axios.get(`http://localhost:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
+                setId (response.data.idUser)
+                axios.get(`http://localhost:3001/user/${response.data.idUser}`, { params: { "id": response.data.idUser } }).then(res => {
+                    setUsername(res.data.username)
+                    setEmail(res.data.email)
+                    setPassword(res.data.password)
+                    setObjectifs(res.data.objectifs)
+                    setConfirmed(res.data.confirmed)
+                    setCity(res.data.city)
+                })
+            })
         })
     }, [])
 
     const validation = async (e) => {
-        let id = document.cookie.split("=")[1];
+        donnees_a_jour = {
+            "username": username,
+            "email": email,
+            "password": password,
+            "confirmed": confirmed,
+            "objectifs": objectifs,
+            "city": city
+        }
+
         axios
             .put(`http://localhost:3001/user/${id}`, donnees_a_jour)
             .then(response => {
@@ -62,7 +76,6 @@ const Ville = () => {
 
 
     const variables = async (e) => {
-        console.log(city)
         if (nouvelle_ville === "") {
             alert("Veuillez entrez un nom de ville valide")
         } else {

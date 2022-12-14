@@ -22,6 +22,9 @@ function Profil() {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [objectifs, setObjectifs] = useState([])
+    const [id, setId] = useState("");
+    const [idSession, setIdSession] = useState("");
+
     let arrayObjectif = [];
     const navigateToHome = () => {
         navigate('/home');
@@ -30,16 +33,19 @@ function Profil() {
         navigate('/modifierObjectif', {state:{name:objectif_name}});
     };
     useEffect(() => {
-        
-        let id = document.cookie.split("=")[1];
-        axios.get(`http://localhost:3001/user/${id}`, { params: { "id": document.cookie } }).then(res => {
-            setObjectifs(res.data.objectifs)
-            setUsername(res.data.username)
-            setEmail(res.data.email)
-        })}, []);
+        axios.get('http://localhost:3001/getcookie', { withCredentials: true }).then(res => {
+            setIdSession(res.data.Id)
+            axios.get(`http://localhost:3001/session/${res.data.Id}`,{ params: { "id": res.data.Id }}).then(response => {
+                setId(response.data.idUser)
+                axios.get(`http://localhost:3001/user/${response.data.idUser}`, { params: { "id": response.data.idUser } }).then(res => {
+                    setObjectifs(res.data.objectifs)
+                    setUsername(res.data.username)
+                    setEmail(res.data.email)
+                })}
+            )})
+        }, []);
 
     function supprimerObjectifs(objectifToDelete) {
-        let id = document.cookie.split("=")[1];
         for (let i = 0; i < objectifs.length; i++) {
             if (objectifToDelete === "") {
                 return "Veuillez entrer un objectif !"
@@ -48,17 +54,15 @@ function Profil() {
                 arrayObjectif.push(objectifs[i])
             }
         }
-        console.log(arrayObjectif)
         let query_choisie = {"id" : id, "objectifs" : arrayObjectif}
         axios.post("http://localhost:3001/user/objectif", query_choisie).then(alert("Objectif supprimé avec succès !"))
         window.location.reload(false);
     };
 
-console.log(objectifs)
     function deconnexion(){
-        axios.get('http://localhost:3001/deletecookie', { withCredentials: true })
+        console.log(id)
+        axios.get('http://localhost:3001/deletecookie', { params: { "id":id } }, { withCredentials: true })
             .then(res => {
-                document.cookie = ""
                 navigateToHome()
                 window.location.reload(false)
             }

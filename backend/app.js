@@ -9,11 +9,13 @@ const Ville = require('./models/ville');
 const userRoutes = require('./routes/user');
 const objRoutes = require('./routes/objectif');
 const villeRoutes = require('./routes/ville')
+const sessionRoutes = require('./routes/session')
 
 const express = require('express');
+const Session = require('./models/session');
 const app = express();
 app.use(express.json())
-app.use(cookieParser());
+app.use(cookieParser('MY SECRET'));
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 //=============================================DB==================================
@@ -44,22 +46,28 @@ xhr.send(null);
 app.use(express.json());
 //=============================================ROUTE==================================
 
+
 app.use('/user', userRoutes);
 
 app.use('/objectif', objRoutes);
 
 app.use('/ville', villeRoutes);
 
+app.use('/session', sessionRoutes);
+
 app.get('/getcookie', (req, res) => {
     //show the saved cookies
-    console.log(req.cookies)
-    return res.status(200).json(req.cookies);
+    return res.status(200).json(req.signedCookies);
 });
 
 app.get('/deletecookie', (req, res) => {
     //show the saved cookies
-    res.clearCookie('Id')
-        return res.status(200).json({message :"Cookie supprimé"});
+    let id_json = {"idUser":ObjectId(req.query.id)}
+    console.log(id_json)
+
+    Session.deleteMany(id_json).then(() => {
+        return res.status(200);
+    })
 });
 
 app.post('/updateUser', (req, res) => {
