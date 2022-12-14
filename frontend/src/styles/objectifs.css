@@ -148,7 +148,7 @@ p {
    bottom: 0;
    left: 0;
    right: 0;
-   background: #df9999;
+   background: #525252;
    border-radius: 20px;
 }
 .switch input:checked + span {
@@ -169,4 +169,11 @@ p {
 }
 .switch input:checked + span:before {
 	left: 34px;
+}
+
+.creerObjectif {
+    font-size: 28px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: black 1px solid;
 }

@@ -43,23 +43,20 @@ function NouvelObjectif(){
             for (let i = 0; i < res.data.objectifs.length; i++){
                 ArrayObjectifs.push(res.data.objectifs[i])
             }
-            //console.log("1",res.data.objectifs)
-           //ArrayObjectifs.push(res.data.objectifs)
-           //console.log(dataUser)
-           console.log("2",ArrayObjectifs)
+        
            ArrayObjectifs.push(dataUser)
+
             let jsonToSend = {"id" : id, "objectifs" : ArrayObjectifs}
-            console.log("4",jsonToSend)
+
             axios.post('http://localhost:3001/user/objectif',jsonToSend)
             .catch(err => console.warn(err));
-           //ArrayObjectifs.push(dataUser)
         })
         .catch(err => console.warn(err));
 
         console.log("3",ArrayObjectifs)
 
         
-        //window.location.reload(false);
+        window.location.reload(false);
         
     }
 
@@ -68,6 +65,7 @@ function NouvelObjectif(){
             <form>
                     <h2>Créer un objectif : </h2>
                     <label>Titre de l'objectif : </label>
+                    <br></br>
                     <input type="text" className="titreObjectif" onChange={(e) => setTitre(e.target.value)}/>
                     <br></br>
                     <br></br>
@@ -83,15 +81,16 @@ function NouvelObjectif(){
                     <br></br>
                     <label>Type d'objectif</label>
                     <br></br>
-                    <select id="type" value={type} onChange={(e) => setType(e.target.value)}>
+                    <select id="type" value={type} defaultValue={"Sportif"} onChange={(e) => setType(e.target.value)}>
                         <option>Sportif</option>
                         <option>Alimentaire</option>
                         <option>Intellectuel</option>
                     </select>
                     <br></br>
                     <br></br>
-                    <label>Objectif Privé :</label>
-                    <br></br>
+                    <label>Rendre l'objectif privé ? </label>
+                    {/* <br></br>
+                    <br></br> */}
                     <label className="switch">
                     <input type="checkbox" onChange={(e) => setOnProfile(e.target.value)}/>
                     <span></span></label>

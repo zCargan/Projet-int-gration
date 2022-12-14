@@ -154,17 +154,17 @@ function Objectifs() {
             <input type="text" placeholder="Recherche" className="searchedObjectifs" onChange={(e) => setSearchedObjectifs(e.target.value)}></input>
             <p className="searchedObjectifsButton" onClick={rechercherObjectifs}>Rechercher</p>
         </div>
+        <br></br>
+
+        <div> 
+            <button className="creerObjectif" onClick={navigateToNouvelObjectif}>Créer un objectif personalisé</button>
+        </div>
 
         <ul>
             {data.map((objectif) =>
                 <li key={objectif._id} className="objectifs"> <p className="titre-objectifs">{objectif.objectif}</p><i className="fas fa-circle-plus" onClick={() => {ajouterObjectifs(objectif)}}></i></li>
             )}
         </ul>
-
-        <div> 
-            <button className="creerObjectif" onClick={navigateToNouvelObjectif}>Créer un objectif personalisé</button>
-        </div>
-
         </>
     );
 }
