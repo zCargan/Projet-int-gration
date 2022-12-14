@@ -11,7 +11,7 @@ import Rgpd from './pages/Rgpd'
 import ModifierObjectif from './pages/ModifierObjectif';
 
 import './styles/App.css'
-import NouvelObjectif from './components/NouvelObjectif';
+import NouvelObjectif from './pages/NouvelObjectif';
 import ProfilUser from './pages/ProfilUsers';
 import BarreRecherche from './components/BarreDeRecherche'
 
@@ -109,6 +109,7 @@ const App = () => {
             <Route path="/inscription" element={<Page_compte />} />
             <Route path="/carte" element={connecte ? <Carte /> : <Navigate to="/inscription" />} />
             <Route path='/nouvel_objectif' element={connecte ? <NouvelObjectif /> : <Navigate to="/inscription" />} />
+            <Route path="/nouvelObjectif" element={<NouvelObjectif />} />
             <Route path='/rgpd' element={<Rgpd />} />
             <Route path='/profilUser' element={<ProfilUser />} />
             <Route path="/modifierObjectif" element={<ModifierObjectif/>}/>

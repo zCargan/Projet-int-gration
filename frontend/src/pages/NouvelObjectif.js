@@ -3,7 +3,7 @@ import "../styles/App.css"
 import axios from 'axios'
 import "../styles/nouvelObjectif.css"
 
-const NouvelObjectif = () => {
+function NouvelObjectif(){
 
     const [titre, setTitre] = useState("");
     const [description, setDescription] = useState("");
@@ -11,51 +11,61 @@ const NouvelObjectif = () => {
     const [type, setType] = useState("");
     const [onProfile, setOnProfile] = useState("");
 
+    
+    let id = document.cookie.split("=")[1];
 
-    const send = async (e) => {
-        e.preventDefault();
+    const send = async(e) => {
 
         let ArrayObjectifs = []
+        console.log(ArrayObjectifs.length)
 
-        let id = document.cookie.split("=")[1];
+        let dataUser = {
+            "name" : titre,
+            "description" : description,
+            "type" : type,
+            "frequence" : recurence,
+            "onProfile" : true,
+            "share" : true
+
+        }
 
         const dataObjectif = {
             "type" : type,
             "objectif" : titre,
-        }
-
-        // let dataUser = {
-        //     "name" : titre,
-        //     "description" : description,
-        //     "frequence" : recurence,
-        //     "onProfile" : onProfile,
-        //     "share" : true
-
-        // }
-
-        // const dataToSend  = [id, dataUser];
+        }        
 
         axios.post("http://localhost:3001/objectif/",
             dataObjectif
         )
         .catch(err => console.warn(err));
 
-        // axios.get(`http://localhost:3001/user/${id}`).then(res => {
-        //    ArrayObjectifs = res.data.objectifs
-        //    ArrayObjectifs.push(dataUser)
-        // })
+        axios.get(`http://localhost:3001/user/${id}`, {params : {"id" : document.cookie}}).then(res => {
+            for (let i = 0; i < res.data.objectifs.length; i++){
+                ArrayObjectifs.push(res.data.objectifs[i])
+            }
+            //console.log("1",res.data.objectifs)
+           //ArrayObjectifs.push(res.data.objectifs)
+           //console.log(dataUser)
+           console.log("2",ArrayObjectifs)
+           ArrayObjectifs.push(dataUser)
+            let jsonToSend = {"id" : id, "objectifs" : ArrayObjectifs}
+            console.log("4",jsonToSend)
+            axios.post('http://localhost:3001/user/objectif',jsonToSend)
+            .catch(err => console.warn(err));
+           //ArrayObjectifs.push(dataUser)
+        })
+        .catch(err => console.warn(err));
 
-        // axios.post('http://localhost:3001/user/objectif',
-        //     dataToSend
-        // )
+        console.log("3",ArrayObjectifs)
 
-        window.location.reload(false);
+        
+        //window.location.reload(false);
         
     }
 
     return(
         <div className="nouvelObjectif">
-            <form onSubmit={send}>
+            <form>
                     <h2>Créer un objectif : </h2>
                     <label>Titre de l'objectif : </label>
                     <input type="text" className="titreObjectif" onChange={(e) => setTitre(e.target.value)}/>
@@ -87,12 +97,12 @@ const NouvelObjectif = () => {
                     <span></span></label>
                     <br></br>
                     <br></br>
-                    <label>Déscription de l'objectif : </label>
+                    <label>Description de l'objectif : </label>
                     <br></br>
                     <input type="text" className="descriptionObjectif" onChange={(e) => setDescription(e.target.value)}/>
                     <br></br>
-                    <input type="submit" className="button_submit" value="Valider"/>
                 </form>
+                <button onClick={() => {send()}} className="button_submit">Valider</button>
             </div>
     )
 };
