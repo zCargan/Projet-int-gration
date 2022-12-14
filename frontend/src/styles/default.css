@@ -16,6 +16,10 @@
     /* float: right; */
 }
 
+.video {
+    width: 100%;
+}
+
 .fa-circle-user:hover {
     border-radius: 90%;
     border: 2px solid #3d3939;
@@ -27,17 +31,22 @@
 
 .bienvenue_text {
     font-size: 3em;
-    color: #b9b9b9
+    color: #b9b9b9;
+    text-align: center;
 }
 
 a {
     border: none;
 }
+
+.div_global {
+    background-color: #3d3939;
+}
 .div_video {
     background-color: #3d3939;
+    display: flex;
     position: absolute;
-    top: 12%;
-    left: 15%;
+    margin: auto;
     width: 1000px;
 
 }
@@ -50,4 +59,12 @@ html, body
 { 
  height: 100%;
  overflow: hidden
+}
+
+p{
+    padding: 0;
+}
+
+.titre{
+    text-align: center;
 }
