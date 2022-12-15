@@ -5,21 +5,24 @@ import "../styles/nouvelObjectif.css"
 
 function NouvelObjectif(){
 
+    //setters permetant de récuperer les données présentes dans e formulaire
     const [titre, setTitre] = useState("");
     const [description, setDescription] = useState("");
-    const [recurence, setRecurence] = useState("");
-    const [type, setType] = useState("");
-    const [onProfile, setOnProfile] = useState("");
-    const [share, setShare] = useState("");
+    const [recurence, setRecurence] = useState("Journalier");
+    const [type, setType] = useState("Bien être");
+    const [onProfile, setOnProfile] = useState("on");
+    const [share, setShare] = useState("on");
 
     
     let id = document.cookie.split("=")[1];
 
+    //la fct send s'effectue a lenvoi du formulaire 
     const send = async(e) => {
         e.preventDefault();
 
         let ArrayObjectifs = []
 
+        //les données a envoyer vers la partie user
         let dataUser = {
             "name" : titre,
             "description" : description,
@@ -30,12 +33,13 @@ function NouvelObjectif(){
 
         }
 
-
+        //les données a envoyer vers la partie objectif
         const dataObjectif = {
             "type" : type,
             "objectif" : titre,
         }        
 
+        //envoi les données vers la partie objectif suelement si l'utilisateur a coché cette option
         if(dataUser.share){
             await axios.post("http://localhost:3001/objectif/",
             dataObjectif
@@ -46,7 +50,7 @@ function NouvelObjectif(){
         
 
         
-
+        //envoi des données vers la partie user 
         await axios.get(`http://localhost:3001/user/${id}`, {params : {"id" : document.cookie}}).then(res => {
             for (let i = 0; i < res.data.objectifs.length; i++){
                 ArrayObjectifs.push(res.data.objectifs[i])
@@ -68,13 +72,14 @@ function NouvelObjectif(){
         
     }
 
+    //formulaire 
     return(
         <div className="nouvelObjectif">
             <form onSubmit={send}>
                     <h2>Créer un objectif : </h2>
                     <label>Titre de l'objectif : </label>
                     <br></br>
-                    <input type="text" className="titreObjectif" onChange={(e) => setTitre(e.target.value)}/>
+                    <input type="text" className="titreObjectif" required onChange={(e) => setTitre(e.target.value)}/>
                     <br></br>
                     <br></br>
                     <label>Récurence :  </label>
@@ -93,6 +98,7 @@ function NouvelObjectif(){
                         <option>Sportif</option>
                         <option>Alimentaire</option>
                         <option>Intellectuel</option>
+                        <option>Bien être</option>
                     </select>
                     <br></br>
                     <br></br>
@@ -104,7 +110,7 @@ function NouvelObjectif(){
                     <span></span></label>
                     <br></br>
                     <br></br>
-                    <label>Partager l'objectif a tout le monde ? </label>
+                    <label>Rendre l'objectif accesible à tout le monde ? </label>
                     <br></br>
                     <br></br>
                     <label className="switch">
