@@ -26,9 +26,28 @@
 }
 
 .bienvenue_text {
-    color: #52a2fa
+    font-size: 3em;
+    color: #b9b9b9
 }
 
 a {
     border: none;
+}
+.div_video {
+    background-color: #3d3939;
+    position: absolute;
+    top: 12%;
+    left: 15%;
+    width: 1000px;
+
+}
+
+.video {
+    width: 100%;
+}
+
+html, body 
+{ 
+ height: 100%;
+ overflow: hidden
 }
