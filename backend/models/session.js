@@ -6,4 +6,6 @@ const sessionSchema = mongoose.Schema({
     time : {type:Date, require: true}
 })
 
+sessionSchema.index({time:1}, {expireAfterSeconds: 600})
+
 module.exports = mongoose.model('Session', sessionSchema); 

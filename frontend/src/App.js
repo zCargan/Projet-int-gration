@@ -39,6 +39,7 @@ const App = () => {
       })
       }
     })
+    console.log(connecte)
     if (connecte){
       return (
         <div className="page">

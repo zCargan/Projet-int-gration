@@ -3,6 +3,7 @@ import '../styles/fil_actualite.css'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Recherche from '../components/BarreDeRecherche'
+import { useNavigate } from 'react-router-dom'
 
 function Fil_actualite() {
     let follows=[]
@@ -17,17 +18,36 @@ function Fil_actualite() {
     let idSession = ""
     let nouveauxObjectifs = [];
     let objectifUser;
+    const navigate = useNavigate();
 
     const [infoFollows, setInfoFollows] = useState([])
     function getRandomInt(max) {
         return Math.floor(Math.random() * max);
       }
+
+    const navigateToInscription = () => {
+        navigate('/inscription');
+    };
+
     useEffect(() => {
         let object ={}
         axios.get('http://localhost:3001/getcookie', { withCredentials: true }).then(res => {
             idSession=res.data.Id
             axios.get(`http://localhost:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
                 setId (response.data.idUser)
+                if (typeof(idSession) !== "string"){
+                    navigateToInscription()
+                }
+                else{
+                    axios.get(`http://localhost:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
+                        if (response.data === null){
+                            navigateToInscription()
+                        }
+                        else{
+                            setId (response.data.idUser)
+                        }
+                  })
+                }
                 axios.get(`http://localhost:3001/user/${response.data.idUser}`, { params: { "id": response.data.idUser } }).then(res => {
                     follows=res.data.userfollows    
                 })

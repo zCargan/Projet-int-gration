@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import "../styles/ville.css"
+import { useNavigate } from 'react-router-dom';
 
 const Ville = () => {
     // ============================================================ CONSTANTES ============================================================
@@ -15,6 +16,10 @@ const Ville = () => {
     const [city, setCity] = useState("");
     const [id, setId] = useState("");
     let idSession = ""
+    const navigate = useNavigate()
+    const navigateToInscription = () => {
+        navigate('/inscription');
+      };
 
     let donnees_a_jour = {
         "username": username,
@@ -39,6 +44,19 @@ const Ville = () => {
             idSession=res.data.Id
             axios.get(`http://localhost:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
                 setId (response.data.idUser)
+                if (typeof(idSession) !== "string"){
+                    navigateToInscription()
+                }
+                else{
+                    axios.get(`http://localhost:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
+                        if (response.data === null){
+                            navigateToInscription()
+                        }
+                        else{
+                            setId (response.data.idUser)
+                        }
+                  })
+                }
                 axios.get(`http://localhost:3001/user/${response.data.idUser}`, { params: { "id": response.data.idUser } }).then(res => {
                     setUsername(res.data.username)
                     setEmail(res.data.email)

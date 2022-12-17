@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { layer, Map, Layers } from "react-openlayers"
 import "../styles/map.css"
 import Localisation from '../components/Localisation';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 const Carte = () => {
@@ -15,20 +16,41 @@ const Carte = () => {
     const location = Localisation;
     const [users, setUsers] = useState([]);
     const [id, setId] = useState("");
+    const navigate = useNavigate();
     let idSession = ""
+
+    const navigateToInscription = () => {
+        navigate('/inscription');
+      };
+
     function LouvainLaNeuve() {
         setPosition0(LouvainLaNeuveLonLat)
         setZoom0(LouvainLaNeuveZoom)
     }
+
+    useEffect(() => {
     axios.get('http://localhost:3001/getcookie', { withCredentials: true }).then(res => {
         idSession=res.data.Id
         axios.get(`http://localhost:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
-            setId (response.data.idUser)
+            setId(response.data.idUser)
+            if (typeof(idSession) !== "string"){
+                navigateToInscription()
+            }
+            else{
+                axios.get(`http://localhost:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
+                    if (response.data === null){
+                        navigateToInscription()
+                    }
+                    else{
+                        setId (response.data.idUser)
+                        axios.get(`http://localhost:3001/user/${id}`, { params: { "id": id } }).then(res => {
+                            setCity(res.data.city)
+                        })
+                    }
+              })
+            }
         })
-    })
-    axios.get(`http://localhost:3001/user/${id}`, { params: { "id": id } }).then(res => {
-        setCity(res.data.city)
-    })
+    })})
 
     const chercher = async (e) => {
         axios.post('http://localhost:3001/user/find', { "city": city }).then(response => {

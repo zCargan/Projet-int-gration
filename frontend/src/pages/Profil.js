@@ -23,7 +23,7 @@ function Profil() {
     const [email, setEmail] = useState("");
     const [objectifs, setObjectifs] = useState([])
     const [id, setId] = useState("");
-    const [idSession, setIdSession] = useState("");
+    let idSession = ""
 
     let arrayObjectif = [];
     const navigateToHome = () => {
@@ -32,17 +32,35 @@ function Profil() {
     const navigateToModifierObjectif = (objectif_name) => {
         navigate('/modifierObjectif', {state:{name:objectif_name}});
     };
+
+    const navigateToInscription = () => {
+        navigate('/inscription')
+        //window.location.reload(true)
+    }
+
     useEffect(() => {
         axios.get('http://localhost:3001/getcookie', { withCredentials: true }).then(res => {
-            setIdSession(res.data.Id)
-            axios.get(`http://localhost:3001/session/${res.data.Id}`,{ params: { "id": res.data.Id }}).then(response => {
-                setId(response.data.idUser)
-                axios.get(`http://localhost:3001/user/${response.data.idUser}`, { params: { "id": response.data.idUser } }).then(res => {
-                    setObjectifs(res.data.objectifs)
-                    setUsername(res.data.username)
-                    setEmail(res.data.email)
-                })}
-            )})
+            idSession = res.data.Id
+            console.log(res.data.Id)
+            if (typeof(idSession) !== "string"){
+                navigateToInscription()
+            }
+            else{
+                axios.get(`http://localhost:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
+                    if (response.data === null){
+                        navigateToInscription()
+                    }
+                    else{
+                        setId(response.data.idUser)
+                        axios.get(`http://localhost:3001/user/${response.data.idUser}`, { params: { "id": id } }).then(res => {
+                            setObjectifs(res.data.objectifs)
+                            setUsername(res.data.username)
+                            setEmail(res.data.email)
+                        })
+                    }
+              })
+            }
+            })
         }, []);
 
     function supprimerObjectifs(objectifToDelete) {

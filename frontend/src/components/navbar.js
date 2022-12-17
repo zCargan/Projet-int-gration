@@ -15,11 +15,12 @@ function Navbar() {
         idSession=res.data.Id
         if (typeof(idSession) !== "string"){
             console.log("pas connecté")
+            setConnecte(false)
           }
           else{
             axios.get(`http://localhost:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
                 if (response.data === null){
-                    console.log("pas connecté")
+                    setConnecte(false)
                 }
                 else{
                     setId (response.data.idUser)

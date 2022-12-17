@@ -2,6 +2,7 @@ import '../styles/App.css'
 import '../styles/objectifs.css'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 // Pour effectuer les tests, il faut mettre en commentaire les lignes 1,2 et 4!
 
@@ -32,13 +33,27 @@ function Objectifs() {
     let idSession = ""
     let nouveauxObjectifs = [];
     let objectifUser;
+    const navigate = useNavigate()
+    const navigateToInscription = () => {
+        navigate('/inscription');
+      };
 
     useEffect(() => {
         axios.get('http://localhost:3001/getcookie', { withCredentials: true }).then(res => {
             idSession=res.data.Id
-            axios.get(`http://localhost:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
-                setId (response.data.idUser)
-            })
+                if (typeof(idSession) !== "string"){
+                    navigateToInscription()
+                }
+                else{
+                    axios.get(`http://localhost:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
+                        if (response.data === null){
+                            navigateToInscription()
+                        }
+                        else{
+                            setId (response.data.idUser)
+                        }
+                  })
+                }
         })
         axios.get(`http://localhost:3001/user/${id}`, {params: {"id" : id}}).then(res => {
             for (let i = 0; i < res.data.objectifs.length; i++){
