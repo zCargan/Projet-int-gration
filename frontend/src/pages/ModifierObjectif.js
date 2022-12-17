@@ -94,7 +94,7 @@ function Objectif  ()  {
                     <input type="text" defaultValue={name} onChange={(e) => setName(e.target.value)}></input>
                     <br></br>
                     <label>Type</label>
-                    <input type="text" defaultValue={type} onChange={(e) => setType(e.target.value)}></input>
+                    <input className='type' type="text" defaultValue={type} onChange={(e) => setType(e.target.value)}></input>
                     <br></br>
                     <label>Description</label>
                     <input type="text" defaultValue={description} onChange={(e) => setDescription(e.target.value)}></input>

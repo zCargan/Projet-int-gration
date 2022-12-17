@@ -14,6 +14,7 @@ import NouvelObjectif from './pages/NouvelObjectif';
 import ProfilUser from './pages/ProfilUsers';
 import About_Us from './pages/About_us';
 import BarreRecherche from './components/BarreDeRecherche'
+import DataRasp from './pages/DataRasp';
 import axios from 'axios'
 import NouvelObjectifPredef from './pages/NouvelObjectifPredef';
 
@@ -40,7 +41,6 @@ const App = () => {
       })
     }
   })
-  console.log(connecte)
   if (connecte) {
     return (
       <div className="page">
@@ -64,6 +64,7 @@ const App = () => {
               <Route path="/fil_actualite" element={<Fil_actualite />} />
               <Route path="/about_us" element={<About_Us />} />
               <Route path="/NouvelObjectifPredef" element={<NouvelObjectifPredef />} />
+              <Route path="/datarasp" element={<DataRasp/>}/>
             </Routes>
           </div>
         </BrowserRouter>
@@ -92,8 +93,8 @@ const App = () => {
               <Route path="/modifierObjectif" element={<Page_compte />} />
               <Route path="/fil_actualite" element={<Page_compte />} />
               <Route path="/about_us" element={<About_Us />} />
-
-            </Routes>
+              <Route path="/datarasp" element={<Page_compte/>}/>
+          </Routes>
           </div>
         </BrowserRouter>
       </div>
