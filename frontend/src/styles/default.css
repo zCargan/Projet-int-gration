@@ -16,6 +16,19 @@
     /* float: right; */
 }
 
+.div_video {
+    background-color: #3d3939;
+    position: absolute;
+    top: 15%;
+    left: 21%;
+    width: 1000px;
+
+}
+
+.video {
+    width: 100%;
+}
+
 .video {
     width: 100%;
 }
