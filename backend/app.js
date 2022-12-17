@@ -9,6 +9,7 @@ const Ville = require('./models/ville');
 const userRoutes = require('./routes/user');
 const objRoutes = require('./routes/objectif');
 const villeRoutes = require('./routes/ville')
+const donneesRoutes = require('./routes/donnees')
 const sessionRoutes = require('./routes/session')
 
 const express = require('express');
@@ -52,6 +53,8 @@ app.use('/user', userRoutes);
 app.use('/objectif', objRoutes);
 
 app.use('/ville', villeRoutes);
+
+app.use('/donnees', donneesRoutes);
 
 app.use('/session', sessionRoutes);
 
