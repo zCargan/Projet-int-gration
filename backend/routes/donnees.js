@@ -9,11 +9,6 @@ router.post('/', donneesCtrl.createDonnees)
 
 router.get('/', donneesCtrl.getDonnees)
 
-module.exports = router;
-
-
-
-
-
+router.get('/all', donneesCtrl.getAllDonnees)
 
 module.exports = router;
