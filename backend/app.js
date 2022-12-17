@@ -71,7 +71,7 @@ app.get('/deletecookie', (req, res) => {
 });
 
 app.post('/updateUser', (req, res) => {
-    let id_value = req.body.id.split("=")[1];
+    let id_value = req.body.id
     let id_json = {"_id":ObjectId(id_value)}
     let modif_json = {[Object.keys(req.body)[1]]:req.body.username, [Object.keys(req.body)[2]]:req.body.email}
    User.updateOne(id_json, {$set:modif_json})

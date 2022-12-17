@@ -24,7 +24,7 @@ const ModifierProfil = () => {
         axios.get('http://localhost:3001/getcookie', { withCredentials: true }).then(res => {
             idSession=res.data.Id
             axios.get(`http://localhost:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
-                setId (response.data.idUser)
+                setId(response.data.idUser)
                 axios.get(`http://localhost:3001/user/${response.data.idUser}`, {params: {"id" : response.data.idUser}}).then(res => {
                     setBasePseudo(res.data.username)
                     setBaseEmail(res.data.email)
@@ -63,7 +63,7 @@ const ModifierProfil = () => {
                 <input type="text" className="username" onChange={(e) => setPseudo(e.target.value)} placeholder={basePseudo}/>
                 <br></br>
                 <label>Adresse email : </label>
-                <input type="text" className="email" onChange={(e) => setEmail(e.target.value)} placeholder={baseEmail}/>
+                <input type="text" className="email" onChange={(e) => setEmail(e.target.value)} defaultValue={baseEmail}/>
                 <input type="submit" className="button_submit" value="Valider"/>
             </form>  
     )
