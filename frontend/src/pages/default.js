@@ -9,7 +9,7 @@ const Default = () => {
     return (
         <div>
             <div className='div_global'>
-                <div>
+                <div className="titre">
                     <p className='bienvenue_text'>
                         NEWME
                     </p>

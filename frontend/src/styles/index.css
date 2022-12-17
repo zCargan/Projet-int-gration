@@ -1,11 +1,9 @@
-
 .index_accueil {
     text-align: center;
 }
 
-body{
+body {
     background-color: #3d3939;
-    background-image: url("../images/logoNewMe.png");
     background-repeat: no-repeat;
     background-position: center;
     display: flex;
