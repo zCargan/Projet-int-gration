@@ -10,32 +10,36 @@ function ButtonFollow (params){
 
     
     const userId = useLocation();
-    const [bouton, setBouton] = useState()
+    const [bouton, setBouton] = useState(false)
     const [newUsersFollows, setData] = useState([]);
-    const [connecte, setConnecte] = useState(false);
     const [id, setId] = useState("");
+
     let idSession = ""
-   
+
+
+
     useEffect(() => {
         axios.get('http://localhost:3001/getcookie', { withCredentials: true }).then(res => {
             idSession=res.data.Id
               axios.get(`http://localhost:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
-                setId (response.data.idUser)
-                axios.get(`http://localhost:3001/user/${id}`).then(res => {
+                axios.get(`http://localhost:3001/user/${response.data.idUser}`).then(res => {
                    setData(res.data.userfollows)
-                   
-                    if(newUsersFollows.includes(userId.state._id)){
+                    if(res.data.userfollows.includes(userId.state._id)){
                         setBouton(false);
                     }
                     else{
                         setBouton(true);
                     };
+
             })
           })
 
-
+          
         }).catch(err => console.log(err));
     }, [bouton])
+
+
+    
     
     
 
