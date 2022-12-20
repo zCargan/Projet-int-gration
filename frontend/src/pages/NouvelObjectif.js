@@ -11,7 +11,7 @@ function NouvelObjectif(){
     const [recurence, setRecurence] = useState("Journalier");
     const [type, setType] = useState("Bien être");
     const [onProfile, setOnProfile] = useState("on");
-    const [share, setShare] = useState("on");
+    const [share, setShare] = useState("");
 
     
     let id = document.cookie.split("=")[1];

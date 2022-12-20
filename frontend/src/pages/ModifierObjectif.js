@@ -3,11 +3,7 @@ import axios from 'axios'
 import '../styles/modifierObjectif.css'
 import { useNavigate } from 'react-router-dom';
 import {useLocation} from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import {useLocation} from 'react-router-dom';
 
-function Objectif  ()  {
-    const location = useLocation();
 function Objectif  ()  {
     const location = useLocation();
     const [name, setName] = useState("");
@@ -23,8 +19,6 @@ function Objectif  ()  {
     let newObjectif = {}
     let jsonToSend = {}
     const navigate = useNavigate();
-    let objectif_name = location.state.name
-    let id = document.cookie.split("=")[1];
     let objectif_name = location.state.name
     const navigateToProfil = () => {
         navigate('/profil');
@@ -127,9 +121,7 @@ function Objectif  ()  {
                     <input type="radio" name="share" defaultChecked={!shareBool} value="false"></input>
                     </div>
                     <input type="button" className="button_form" value="Valider" onClick={sendData}/>
-                    <input type="button" className="button_form" value="Valider" onClick={sendData}/>
                     <br></br>
-                    <button className="button_form" onClick={() => {truc();}}>Annuler</button>
                     <button className="button_form" onClick={() => {truc();}}>Annuler</button>
                 </form> 
             </div>
@@ -151,9 +143,6 @@ function Objectif  ()  {
                 <br></br>
                 Partager avec les autres utilisateur : {shareBool}
                 <br></br>
-                <button onClick={() => {truc();}} className="button_form">Modifier</button>
-                <br></br>
-                <button onClick={() => {navigateToProfil();}} className="button_form">Annuler</button>
                 <button onClick={() => {truc();}} className="button_form">Modifier</button>
                 <br></br>
                 <button onClick={() => {navigateToProfil();}} className="button_form">Annuler</button>
