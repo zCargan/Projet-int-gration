@@ -49,7 +49,6 @@ exports.getOneUser = (req, res, next) => {
   };
 
 exports.updateUserObjectif = (req, res, next) => {
-  console.log(req.body)
   let keys = Object.keys(req.body)
   let values = Object.values(req.body)
   let id_value = values[0];

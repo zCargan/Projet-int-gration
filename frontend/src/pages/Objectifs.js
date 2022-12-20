@@ -41,8 +41,6 @@ function Objectifs() {
         navigate('/inscription');
       };
 
-    const navigate = useNavigate();
-
     const navigateToNouvelObjectif = () => {
         // 👇️ navigate to /nouvelObjectif
         navigate('/nouvelObjectif');

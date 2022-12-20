@@ -2,6 +2,8 @@ import React, { useState ,useEffect} from 'react';
 import "../styles/App.css"
 import axios from 'axios'
 import "../styles/nouvelObjectif.css"
+import { useNavigate } from 'react-router-dom';
+
 
 function NouvelObjectif(){
 
@@ -12,16 +14,48 @@ function NouvelObjectif(){
     const [type, setType] = useState("Bien être");
     const [onProfile, setOnProfile] = useState("on");
     const [share, setShare] = useState("");
+    const [id, setId] = useState("");
 
+    const navigate = useNavigate()
+
+    const navigateToProfil = () => {
+        //  navigate to /profil
+        navigate('/Profil');
+      };
+
+    const navigateToInscription = () => {
+        navigate('/inscription');
+      };
     
-    let id = document.cookie.split("=")[1];
+    let idSession
+
+    let ArrayObjectifs = []
+
+
+    useEffect(() => {
+        axios.get('http://localhost:3001/getcookie', { withCredentials: true }).then(res => {
+            idSession=res.data.Id
+                if (typeof(idSession) !== "string"){
+                    navigateToInscription()
+                }
+                else{
+                    axios.get(`http://localhost:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
+                        if (response.data === null){
+                            navigateToInscription()
+                        }
+                        else{
+                            setId (response.data.idUser)
+                        }
+                  })
+                }
+        })
+    });
 
     //la fct send s'effectue a lenvoi du formulaire 
     const send = async(e) => {
         e.preventDefault();
 
-        let ArrayObjectifs = []
-
+        
         //les données a envoyer vers la partie user
         let dataUser = {
             "name" : titre,
@@ -68,7 +102,7 @@ function NouvelObjectif(){
 
 
         
-        window.location.reload(false);
+        navigateToProfil();
         
     }
 

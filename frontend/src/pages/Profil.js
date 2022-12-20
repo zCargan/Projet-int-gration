@@ -8,22 +8,23 @@ import { useNavigate } from 'react-router-dom'
 import Popup from "reactjs-popup";
 import Ville from '../components/Ville'
 
-export function checkIfHigherThan0(number) {
-    if (Number.isInteger(number)) {
+export function checkIfHigherThan0(number){
+    if(Number.isInteger(number)){
         return number >= 0
     }
-    else {
+    else{
         return "Ce n'est pas un nombre"
     }
 }
-
-
 function Profil() {
     
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [objectifs, setObjectifs] = useState([])
+    const [id, setId] = useState("");
+    let idSession = ""
+
     let arrayObjectif = [];
     const navigateToHome = () => {
         navigate('/home');
@@ -31,6 +32,12 @@ function Profil() {
     const navigateToModifierObjectif = (objectif_name) => {
         navigate('/modifierObjectif', {state:{name:objectif_name}});
     };
+
+    const navigateToInscription = () => {
+        navigate('/inscription')
+        //window.location.reload(true)
+    }
+
     useEffect(() => {
         axios.get('http://localhost:3001/getcookie', { withCredentials: true }).then(res => {
             idSession = res.data.Id
@@ -57,7 +64,6 @@ function Profil() {
         }, []);
 
     function supprimerObjectifs(objectifToDelete) {
-        let id = document.cookie.split("=")[1];
         for (let i = 0; i < objectifs.length; i++) {
             if (objectifToDelete === "") {
                 return "Veuillez entrer un objectif !"
@@ -66,7 +72,6 @@ function Profil() {
                 arrayObjectif.push(objectifs[i])
             }
         }
-        console.log(arrayObjectif)
         let query_choisie = {"id" : id, "objectifs" : arrayObjectif}
         axios.post("http://localhost:3001/user/objectif", query_choisie).then(alert("Objectif supprimé avec succès !"))
         window.location.reload(false);

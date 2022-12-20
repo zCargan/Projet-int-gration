@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import axios from 'axios';
 import "../styles/inscription.css"
 import "../styles/App.css"
@@ -71,7 +71,9 @@ const Inscription = () => {
     const passwordHasUppercaseLetter = HasUpperCaseLetter(password);
     const passwordHasSpecialCharacter = HasSpecialCharacter(password);
     const passwordHasNumber = HasNumber(password);
-    const hashedPassword = bcrypt.hashSync(password, 10);
+    const hashedPassword = bcrypt.hashSync(password, "$2a$10$sZk/IsTrgMV.iO0dRgU/xu");
+    const [villes, setVilles] = useState([]);
+    const [city, setCity] = useState("");
 
 
     /*=========================================== RECUPERE LES VARIABLES DE CREACTION DE COMPTE ===========================================*/
@@ -110,7 +112,6 @@ const Inscription = () => {
         }
 
         //variable nécessaire afin d'effectuer à la requete à la db afin de savoir si l'email est déja utilisé ou non
-
 
         if (allComplete(username, email, password, samePassword)) {
             if (allNotToLong(username, email, password, samePassword)) {
