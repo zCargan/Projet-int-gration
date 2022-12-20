@@ -4,12 +4,27 @@ const mongoose = require('mongoose');
 const ObjectId = require('mongodb').ObjectID;
 const Session = require("../models/session")
 const argon2 = require('argon2');
+const CryptoJS = require('crypto-js');
+
 
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var xhr = new XMLHttpRequest();
 xhr.open('GET', 'http://example.com/', true);
 xhr.withCredentials = true;
 xhr.send(null);
+
+const encryptWithAES = (text) => {
+  const passphrase = 'projetdintegration';
+  return CryptoJS.AES.encrypt(text, passphrase).toString();
+};
+
+const decryptWithAES = (ciphertext) => {
+  const passphrase = 'projetdintegration';
+  const bytes = CryptoJS.AES.decrypt(ciphertext, passphrase);
+  const originalText = bytes.toString(CryptoJS.enc.Utf8);
+  return originalText;
+}
+
 
 exports.createUser = (req, res) => {
   let username = req.body.username;
@@ -20,7 +35,7 @@ exports.createUser = (req, res) => {
     let city = req.body.city
     const test = new User({
       "username" : username,
-      "email" : email,
+      "email" : encryptWithAES(email),
       "password":passwordhashed,
       "objectifs": objectifs,
       "userfollows":userfollows,
@@ -188,7 +203,15 @@ exports.getOneMail = (req, res) => {
 
 
 exports.login = (req, res ,next) => {
-  User.findOne({ email: req.body.email})
+  let mailCrypt;
+  User.find().then(
+    (users) => {
+      for (let i in users){
+        if(req.body.email == decryptWithAES(users[i].email)){
+          mailCrypt = users[i].email
+        }
+      }
+      User.findOne({ email: mailCrypt})
     .then(response => {
       argon2.verify(response.password, req.body.password)
       .then(mdp =>{
@@ -214,8 +237,12 @@ exports.login = (req, res ,next) => {
       })
     })
     .catch((error) => {
-      res.status(401).json();
+      res.status(401).json({
+        error: error
+      });
     })
+    }
+  )
   }
 
 
