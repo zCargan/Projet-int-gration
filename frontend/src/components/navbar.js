@@ -12,24 +12,24 @@ function Navbar() {
     const [connecte, setConnecte] = useState(false);
 
     axios.get('http://localhost:3001/getcookie', { withCredentials: true }).then(res => {
-        idSession=res.data.Id
-        if (typeof(idSession) !== "string"){
+        idSession = res.data.Id
+        if (typeof (idSession) !== "string") {
             console.log("pas connecté")
             setConnecte(false)
-          }
-          else{
-            axios.get(`http://localhost:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
-                if (response.data === null){
+        }
+        else {
+            axios.get(`http://localhost:3001/session/${idSession}`, { params: { "id": idSession } }).then(response => {
+                if (response.data === null) {
                     setConnecte(false)
                 }
-                else{
-                    setId (response.data.idUser)
+                else {
+                    setId(response.data.idUser)
                     setConnecte(true)
                 }
-          })
-          }
+            })
+        }
     })
-    if (!connecte){
+    if (!connecte) {
         return (
             <nav className={click ? 'navbar-active' : 'navbar'}>
                 <div className='navbar-container'>
@@ -50,6 +50,11 @@ function Navbar() {
                         <li className='nav-item'>
                             <NavLink to="/inscription" className={(state) => state.isActive ? 'nav-links-mobile-active' : 'nav-links-mobile'}>
                                 Sign Up
+                            </NavLink>
+                        </li>
+                        <li className='nav-item'>
+                            <NavLink to="/about_us" className={(state) => state.isActive ? 'nav-links-mobile-active' : 'nav-links-mobile'}>
+                                About Us
                             </NavLink>
                         </li>
                     </ul>
@@ -98,7 +103,7 @@ function Navbar() {
             </div>
         </nav>
     )
-    
+
 }
 
 export default Navbar
