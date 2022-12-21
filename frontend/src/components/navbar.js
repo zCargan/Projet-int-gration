@@ -104,6 +104,11 @@ function Navbar() {
                             Profil
                         </NavLink>
                     </li>
+                    <li className='nav-item'>
+                            <NavLink to="/about_us" className={(state) => state.isActive ? 'nav-links-mobile-active' : 'nav-links-mobile'}>
+                                About Us
+                            </NavLink>
+                        </li>
                 </ul>
             </div>
         </nav>
