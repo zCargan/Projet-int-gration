@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import About from './pages/About';
 import Objectifs from './pages/Objectifs';
 import Page_compte from './pages/Page_compte';
 import Navbar from './components/navbar';
@@ -16,6 +15,7 @@ import ProfilUser from './pages/ProfilUsers';
 import About_Us from './pages/About_us';
 import BarreRecherche from './components/BarreDeRecherche'
 import axios from 'axios'
+import NouvelObjectifPredef from './pages/NouvelObjectifPredef';
 
 const App = () => {
   const [connecte, setConnecte] = useState(false);
@@ -51,7 +51,6 @@ const App = () => {
           <div className="element">
             <Routes>
               <Route path="/" element={<Default />} />
-              <Route path="/about" element={<About />} />
               <Route path="/objectifs" element={<Objectifs />} />
               {/* page par défault  */}
               <Route path="*" element={<Default />} />
@@ -64,6 +63,7 @@ const App = () => {
               <Route path="/modifierObjectif" element={<ModifierObjectif />} />
               <Route path="/fil_actualite" element={<Fil_actualite />} />
               <Route path="/about_us" element={<About_Us />} />
+              <Route path="/NouvelObjectifPredef" element={<NouvelObjectifPredef />} />
             </Routes>
           </div>
         </BrowserRouter>
@@ -80,7 +80,6 @@ const App = () => {
           <div className="element">
             <Routes>
               <Route path="/" element={<Default />} />
-              <Route path="/about" element={<About />} />
               <Route path="/objectifs" element={<Page_compte />} />
               {/* page par défault  */}
               <Route path="*" element={<Default />} />

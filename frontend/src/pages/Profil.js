@@ -92,7 +92,6 @@ function Profil() {
             <div className='profil'>
                 <h2>Mon profil :</h2>
                 <div className='text'>
-                    <i className="fa-solid fa-circle-user"></i>
                     <p className="username">Pseudonyme : {username}</p>
                     <p className="email">Adresse email : {email}</p>
                 </div>
