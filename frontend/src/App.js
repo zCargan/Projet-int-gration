@@ -11,7 +11,7 @@ import Rgpd from './pages/Rgpd'
 import ModifierObjectif from './pages/ModifierObjectif';
 import Fil_actualite from "./pages/fil_d'actu"
 import './styles/App.css'
-import NouvelObjectif from './components/NouvelObjectif';
+import NouvelObjectif from './pages/NouvelObjectif';
 import ProfilUser from './pages/ProfilUsers';
 import About_Us from './pages/About_us';
 import BarreRecherche from './components/BarreDeRecherche'
@@ -58,7 +58,7 @@ const App = () => {
               <Route path="/profil" element={<Profil />} />
               <Route path="/inscription" element={<Page_compte />} />
               <Route path="/carte" element={<Carte />} />
-              <Route path='/nouvel_objectif' element={<NouvelObjectif />} />
+              <Route path='/nouvelObjectif' element={<NouvelObjectif />} />
               <Route path='/rgpd' element={<Rgpd />} />
               <Route path='/profilUser' element={<ProfilUser />} />
               <Route path="/modifierObjectif" element={<ModifierObjectif />} />
