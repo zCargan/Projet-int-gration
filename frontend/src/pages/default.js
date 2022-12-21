@@ -35,13 +35,12 @@ const Default = () => {
                 <div className='div_video'>
                     <ReactPlayer className="video"
                         url="https://www.youtube.com/watch?v=VFNMX8s2Q10"
-                        playing={true}
-                        onStart={true}
+                        playing={false}
                         loop={true}
-                        onReady={true}
                         width="100%"
                         height="562px"
                         volume={0.01}
+                        controls={true}
                     />
                 </div>
                 <div>
