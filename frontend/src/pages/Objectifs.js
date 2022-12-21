@@ -46,6 +46,10 @@ function Objectifs() {
         navigate('/nouvelObjectif');
       };
 
+    const navigateToNouvelObjectifBase = (objectif_name) => {
+        navigate('/nouvelObjectifPredef', {state:{name:objectif_name}});
+    };
+
     useEffect(() => {
         axios.get('http://localhost:3001/getcookie', { withCredentials: true }).then(res => {
             idSession=res.data.Id
@@ -71,53 +75,7 @@ function Objectifs() {
     });
 
     function ajouterObjectifs(params) {
-        let verifie = true;
-        for (let i = 0; i < nouveauxObjectifs.length; i++) {
-            if (params === "") {
-                return "Veuillez entrer un objectif !"
-            }
-            else if (nouveauxObjectifs[i].name === params.objectif) {
-                verifie = false;
-            }
-        }
-
-        if (verifie) {
-            if (params.objectif === "Courir plus") {
-                description ="Courir 2x"
-                frequence="Hebdomadaire"
-                name=params.objectif;
-                type=params.type
-            } else if (params.objectif === "Aller courir") {
-                description ="Courir 2x"
-                frequence="Hebdomadaire"
-                name=params.objectif;
-                type=params.type
-            } else if (params.objectif === "Manger moins de viande") {
-                description ="Manger moins de viande"
-                frequence="Journalier"
-                name=params.objectif;
-                type=params.type
-            } else if (params.objectif === "Apprendre l'anglais") {
-                description ="Être B2 avant la fin de l'année"
-                frequence="Hebdomadaire"
-                name=params.objectif;
-                type=params.type
-            } else if (params.objectif === "Manger plus de légumes") {
-                description ="Manger plus de légumes"
-                frequence="Mensuel"
-                name=params.objectif;
-                type=params.type
-            }
-        } else {
-            alert("L'objectif choisi a déjà été ajouté !")
-            return
-        }
-        objectifUser = {"name":name,"description":description, "type":type, "frequence":frequence, "onProfile":onProfile, "share":share }
-        nouveauxObjectifs.push(objectifUser)
-        let dataToSend = {"id" : id, "objectifs" : nouveauxObjectifs}
-
-        axios.post("http://localhost:3001/user/objectif", dataToSend).then(alert("Objectif ajouté avec succès !"))
-        window.location.reload(false);
+        navigateToNouvelObjectifBase(params.objectif)
     };
 
     const rechercherObjectifs = async (e) => {
