@@ -24,11 +24,11 @@ function Objectif  ()  {
         navigate('/profil');
       };
     useEffect(() => {
-        axios.get('http://localhost:3001/getcookie', { withCredentials: true }).then(res => {
+        axios.get('https://www.newme.ovh:3001/getcookie', { withCredentials: true }).then(res => {
             idSession=res.data.Id   
-              axios.get(`http://localhost:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
+              axios.get(`https://www.newme.ovh:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
                 setId(response.data.idUser)
-                axios.get(`http://localhost:3001/user/${response.data.idUser}`, { params: { "id": response.data.idUser } }).then(res => {
+                axios.get(`https://www.newme.ovh:3001/user/${response.data.idUser}`, { params: { "id": response.data.idUser } }).then(res => {
                     for (let i=0 ; i < res.data.objectifs.length;i++){
                         if (res.data.objectifs[i].name===objectif_name){
                             setName(res.data.objectifs[i].name)
@@ -46,7 +46,7 @@ function Objectif  ()  {
                     }
 
                 })
-                axios.get(`http://localhost:3001/user/${response.data.idUser}`).then(res => {
+                axios.get(`https://www.newme.ovh:3001/user/${response.data.idUser}`).then(res => {
                     setData(res.data.objectifs)
                 })
             })
@@ -67,7 +67,7 @@ function Objectif  ()  {
         }
         dataToSend.push(newObjectif)
         jsonToSend = {"id" : id, "objectifs" : dataToSend}
-        axios.post(`http://localhost:3001/user/objectif`, jsonToSend)
+        axios.post(`https://www.newme.ovh:3001/user/objectif`, jsonToSend)
         navigateToProfil()
      }
      function changeOnProfileBool(value){

@@ -8,7 +8,7 @@ const Api = () => {
     const [data, setData] = useState([])
     useEffect(() => {
         axios
-            .get("http://localhost:3010/objectif")
+            .get("https://www.newme.ovh:3001/objectif")
             .then((res) => setData(res.data));
     }, [])
 

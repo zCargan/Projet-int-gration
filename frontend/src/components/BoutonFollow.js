@@ -17,11 +17,11 @@ function ButtonFollow (params){
     let idSession = ""
    
     useEffect(() => {
-        axios.get('http://localhost:3001/getcookie', { withCredentials: true }).then(res => {
+        axios.get('https://www.newme.ovh:3001/getcookie', { withCredentials: true }).then(res => {
             idSession=res.data.Id
-              axios.get(`http://localhost:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
+              axios.get(`https://www.newme.ovh:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
                 setId (response.data.idUser)
-                axios.get(`http://localhost:3001/user/${id}`).then(res => {
+                axios.get(`https://www.newme.ovh:3001/user/${id}`).then(res => {
                    setData(res.data.userfollows)
                    
                     if(newUsersFollows.includes(userId.state._id)){
@@ -42,12 +42,12 @@ function ButtonFollow (params){
     function suivreFollow(){
         if( newUsersFollows.includes(userId.state._id) ){
             newUsersFollows.splice(newUsersFollows.indexOf(userId.state._id),1)
-            axios.put(`http://localhost:3001/user/${id}`, {userfollows : newUsersFollows}).then(alert("Utilisateur retiré"))
+            axios.put(`https://www.newme.ovh:3001/user/${id}`, {userfollows : newUsersFollows}).then(alert("Utilisateur retiré"))
             setBouton(true)
         }
         else {
             newUsersFollows.push(userId.state._id);
-            axios.put(`http://localhost:3001/user/follow/${id}`, { userfollows : newUsersFollows }).then(alert("Utilisateur suivi!"))
+            axios.put(`https://www.newme.ovh:3001/user/follow/${id}`, { userfollows : newUsersFollows }).then(alert("Utilisateur suivi!"))
             setBouton(false)
         }
 

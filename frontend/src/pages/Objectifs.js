@@ -39,13 +39,13 @@ function Objectifs() {
       };
 
     useEffect(() => {
-        axios.get('http://localhost:3001/getcookie', { withCredentials: true }).then(res => {
+        axios.get('https://www.newme.ovh:3001/getcookie', { withCredentials: true }).then(res => {
             idSession=res.data.Id
                 if (typeof(idSession) !== "string"){
                     navigateToInscription()
                 }
                 else{
-                    axios.get(`http://localhost:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
+                    axios.get(`https://www.newme.ovh:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
                         if (response.data === null){
                             navigateToInscription()
                         }
@@ -55,7 +55,7 @@ function Objectifs() {
                   })
                 }
         })
-        axios.get(`http://localhost:3001/user/${id}`, {params: {"id" : id}}).then(res => {
+        axios.get(`https://www.newme.ovh:3001/user/${id}`, {params: {"id" : id}}).then(res => {
             for (let i = 0; i < res.data.objectifs.length; i++){
                 nouveauxObjectifs.push(res.data.objectifs[i])
             }
@@ -107,7 +107,7 @@ function Objectifs() {
         nouveauxObjectifs.push(objectifUser)
         let dataToSend = {"id" : id, "objectifs" : nouveauxObjectifs}
 
-        axios.post("http://localhost:3001/user/objectif", dataToSend).then(alert("Objectif ajouté avec succès !"))
+        axios.post("https://www.newme.ovh:3001/user/objectif", dataToSend).then(alert("Objectif ajouté avec succès !"))
         window.location.reload(false);
     };
 
@@ -132,7 +132,7 @@ function Objectifs() {
     }
 
     useEffect(() => {
-        axios.get('http://localhost:3001/objectif').then(res => {
+        axios.get('https://www.newme.ovh:3001/objectif').then(res => {
            setData(res.data)
            setBaseData(res.data)
         }).catch(err => console.log(err));

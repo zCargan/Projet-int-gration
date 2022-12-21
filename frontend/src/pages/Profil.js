@@ -39,20 +39,20 @@ function Profil() {
     }
 
     useEffect(() => {
-        axios.get('http://localhost:3001/getcookie', { withCredentials: true }).then(res => {
+        axios.get('https://www.newme.ovh:3001/getcookie', { withCredentials: true }).then(res => {
             idSession = res.data.Id
             console.log(res.data.Id)
             if (typeof(idSession) !== "string"){
                 navigateToInscription()
             }
             else{
-                axios.get(`http://localhost:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
+                axios.get(`https://www.newme.ovh:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
                     if (response.data === null){
                         navigateToInscription()
                     }
                     else{
                         setId(response.data.idUser)
-                        axios.get(`http://localhost:3001/user/${response.data.idUser}`, { params: { "id": id } }).then(res => {
+                        axios.get(`https://www.newme.ovh:3001/user/${response.data.idUser}`, { params: { "id": id } }).then(res => {
                             setObjectifs(res.data.objectifs)
                             setUsername(res.data.username)
                             setEmail(res.data.email)
@@ -73,13 +73,12 @@ function Profil() {
             }
         }
         let query_choisie = {"id" : id, "objectifs" : arrayObjectif}
-        axios.post("http://localhost:3001/user/objectif", query_choisie).then(alert("Objectif supprimé avec succès !"))
+        axios.post("https://www.newme.ovh:3001/user/objectif", query_choisie).then(alert("Objectif supprimé avec succès !"))
         window.location.reload(false);
     };
 
     function deconnexion(){
-        console.log(id)
-        axios.get('http://localhost:3001/deletecookie', { params: { "id":id } }, { withCredentials: true })
+        axios.get('https://www.newme.ovh:3001/deletecookie', { params: { "id":id } }, { withCredentials: true })
             .then(res => {
             }
             )

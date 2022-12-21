@@ -32,7 +32,7 @@ const Ville = () => {
 
 
     useEffect(() => {
-        axios.get("http://localhost:3001/ville/commune").then(response => {
+        axios.get("https://www.newme.ovh:3001/ville/commune").then(response => {
             let array = [];
             for (let i = 0; i < response.data[0].Villes.length; i++) {
                 array.push(response.data[0].Villes[i])
@@ -40,15 +40,15 @@ const Ville = () => {
             }
             array = array.sort()
         });
-        axios.get('http://localhost:3001/getcookie', { withCredentials: true }).then(res => {
+        axios.get('https://www.newme.ovh:3001/getcookie', { withCredentials: true }).then(res => {
             idSession=res.data.Id
-            axios.get(`http://localhost:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
+            axios.get(`https://www.newme.ovh:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
                 setId (response.data.idUser)
                 if (typeof(idSession) !== "string"){
                     navigateToInscription()
                 }
                 else{
-                    axios.get(`http://localhost:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
+                    axios.get(`https://www.newme.ovh:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
                         if (response.data === null){
                             navigateToInscription()
                         }
@@ -57,7 +57,7 @@ const Ville = () => {
                         }
                   })
                 }
-                axios.get(`http://localhost:3001/user/${response.data.idUser}`, { params: { "id": response.data.idUser } }).then(res => {
+                axios.get(`https://www.newme.ovh:3001/user/${response.data.idUser}`, { params: { "id": response.data.idUser } }).then(res => {
                     setUsername(res.data.username)
                     setEmail(res.data.email)
                     setPassword(res.data.password)
@@ -80,7 +80,7 @@ const Ville = () => {
         }
 
         axios
-            .put(`http://localhost:3001/user/${id}`, donnees_a_jour)
+            .put(`https://www.newme.ovh:3001/user/${id}`, donnees_a_jour)
             .then(response => {
                 if (response.status === 201) {
                     alert("Profil modifié")

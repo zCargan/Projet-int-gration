@@ -11,14 +11,14 @@ function Navbar() {
     const handleClick = () => setClick(!click);
     const [connecte, setConnecte] = useState(false);
 
-    axios.get('http://localhost:3001/getcookie', { withCredentials: true }).then(res => {
+    axios.get('https://www.newme.ovh:3001/getcookie', { withCredentials: true }).then(res => {
         idSession=res.data.Id
         if (typeof(idSession) !== "string"){
             console.log("pas connecté")
             setConnecte(false)
           }
           else{
-            axios.get(`http://localhost:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
+            axios.get(`https://www.newme.ovh:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
                 if (response.data === null){
                     setConnecte(false)
                 }

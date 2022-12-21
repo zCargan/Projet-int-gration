@@ -21,11 +21,11 @@ const ModifierProfil = () => {
     const [id, setId] = useState("");
     let idSession = ""
     useEffect(() => {
-        axios.get('http://localhost:3001/getcookie', { withCredentials: true }).then(res => {
+        axios.get('https://www.newme.ovh:3001/getcookie', { withCredentials: true }).then(res => {
             idSession=res.data.Id
-            axios.get(`http://localhost:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
+            axios.get(`https://www.newme.ovh:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
                 setId(response.data.idUser)
-                axios.get(`http://localhost:3001/user/${response.data.idUser}`, {params: {"id" : response.data.idUser}}).then(res => {
+                axios.get(`https://www.newme.ovh:3001/user/${response.data.idUser}`, {params: {"id" : response.data.idUser}}).then(res => {
                     setBasePseudo(res.data.username)
                     setBaseEmail(res.data.email)
                 })
@@ -48,7 +48,7 @@ const ModifierProfil = () => {
             }
             else{
                 if(checkEmail(infos.email)){
-                    axios.post('http://localhost:3001/updateUser', infos)
+                    axios.post('https://www.newme.ovh:3001/updateUser', infos)
                     window.location.reload(false)
                 }
                 else{

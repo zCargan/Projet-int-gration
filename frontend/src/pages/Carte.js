@@ -29,21 +29,21 @@ const Carte = () => {
     }
 
     useEffect(() => {
-    axios.get('http://localhost:3001/getcookie', { withCredentials: true }).then(res => {
+    axios.get('https://www.newme.ovh:3001/getcookie', { withCredentials: true }).then(res => {
         idSession=res.data.Id
-        axios.get(`http://localhost:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
+        axios.get(`https://www.newme.ovh:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
             setId(response.data.idUser)
             if (typeof(idSession) !== "string"){
                 navigateToInscription()
             }
             else{
-                axios.get(`http://localhost:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
+                axios.get(`https://www.newme.ovh:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
                     if (response.data === null){
                         navigateToInscription()
                     }
                     else{
                         setId (response.data.idUser)
-                        axios.get(`http://localhost:3001/user/${id}`, { params: { "id": id } }).then(res => {
+                        axios.get(`https://www.newme.ovh:3001/user/${id}`, { params: { "id": id } }).then(res => {
                             setCity(res.data.city)
                         })
                     }
@@ -53,7 +53,7 @@ const Carte = () => {
     })})
 
     const chercher = async (e) => {
-        axios.post('http://localhost:3001/user/find', { "city": city }).then(response => {
+        axios.post('https://www.newme.ovh:3001/user/find', { "city": city }).then(response => {
             const array_user = [];
             for (let i = 0; i < response.data.length; i++) {
 

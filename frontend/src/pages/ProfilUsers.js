@@ -17,8 +17,8 @@ function ProfilUser(){
             <div className='profilFooter'>
             <p className="obj">Objectifs :</p>
                 <ul className="listeObj">
-                {userId.state.objectifs.map((objectif) =>
-                    <li key={objectif._id} className="objectifsUser"><p className="titre-objectifs">{objectif.name}</p></li>
+                {userId.state.objectifs.map((objectif, n) =>
+                    <li key={n} className="objectifsUser"><p className="titre-objectifs">{objectif.name}</p></li>
                 )}
                 </ul>
             </div>

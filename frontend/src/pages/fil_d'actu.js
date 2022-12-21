@@ -31,15 +31,15 @@ function Fil_actualite() {
 
     useEffect(() => {
         let object ={}
-        axios.get('http://localhost:3001/getcookie', { withCredentials: true }).then(res => {
+        axios.get('https://www.newme.ovh:3001/getcookie', { withCredentials: true }).then(res => {
             idSession=res.data.Id
-            axios.get(`http://localhost:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
+            axios.get(`https://www.newme.ovh:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
                 setId (response.data.idUser)
                 if (typeof(idSession) !== "string"){
                     navigateToInscription()
                 }
                 else{
-                    axios.get(`http://localhost:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
+                    axios.get(`https://www.newme.ovh:3001/session/${idSession}`,{ params: { "id": idSession }}).then(response => {
                         if (response.data === null){
                             navigateToInscription()
                         }
@@ -48,10 +48,10 @@ function Fil_actualite() {
                         }
                   })
                 }
-                axios.get(`http://localhost:3001/user/${response.data.idUser}`, { params: { "id": response.data.idUser } }).then(res => {
+                axios.get(`https://www.newme.ovh:3001/user/${response.data.idUser}`, { params: { "id": response.data.idUser } }).then(res => {
                     follows=res.data.userfollows    
                 })
-                axios.get('http://localhost:3001/user').then(res =>{
+                axios.get('https://www.newme.ovh:3001/user').then(res =>{
                 for (let i = 0; i<follows.length;i++){
                     for (let j = 0; j < res.data.length ;j++){
                         if (res.data[j]._id === follows[i] ){
@@ -118,7 +118,7 @@ function Fil_actualite() {
         nouveauxObjectifs.push(objectifUser)
         let dataToSend = {"id" : id, "objectifs" : nouveauxObjectifs}
 
-        axios.post("http://localhost:3001/user/objectif", dataToSend).then(alert("Objectif ajouté avec succès !"))
+        axios.post("https://www.newme.ovh:3001/user/objectif", dataToSend).then(alert("Objectif ajouté avec succès !"))
         window.location.reload(false);
     };
 

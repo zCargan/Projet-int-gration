@@ -20,14 +20,14 @@ const App = () => {
   const [connecte, setConnecte] = useState(false);
   const [id, setId] = useState("");
 
-    axios.get('http://localhost:3001/getcookie', { withCredentials: true }).then(res => {
+    axios.get('https://www.newme.ovh:3001/getcookie', { withCredentials: true }).then(res => {
       let idSession=res.data.Id;
       if (typeof(idSession) !== "string"){
         console.log("pas connecté")
         setConnecte(false)
       }
       else{
-        axios.get(`http://localhost:3001/session/${idSession}`, { params: { "id": idSession }}).then(response => {
+        axios.get(`https://www.newme.ovh:3001/session/${idSession}`, { params: { "id": idSession }}).then(response => {
           if (response.data === null){
             console.log("pas connecté")
             setConnecte(false)
@@ -39,7 +39,6 @@ const App = () => {
       })
       }
     })
-    console.log(connecte)
     if (connecte){
       return (
         <div className="page">

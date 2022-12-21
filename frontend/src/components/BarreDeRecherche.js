@@ -17,7 +17,7 @@ function BarreRecherche(){
     
 
     const recupData = () => {
-        axios.get('http://localhost:3001/user')
+        axios.get('https://www.newme.ovh:3001/user')
         .then(res => {
             setUser(res.data)
 

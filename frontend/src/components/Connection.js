@@ -30,7 +30,7 @@ const Connection = () => {
                 "email":email,
                 "password": hashedPassword
             }
-            axios.post("http://localhost:3001/user/login", values, { withCredentials: true })
+            axios.post("https://www.newme.ovh:3001/user/login", values, { withCredentials: true })
                 .then(response => {
                     alert("Vous êtes connecté")
                     navigateToHome()

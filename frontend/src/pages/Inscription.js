@@ -31,13 +31,13 @@ const Inscription = () => {
             return re.test(email);
         }
 
-        axios.post("http://localhost:3010/username", infos)
+        axios.post("https://www.newme.ovh:3010/username", infos)
             .then(response => {
                 if (response.data == "not ok") {
                     alert("Username already used");
                 } else {
                     if (checkEmail(email)) {
-                        axios.post("http://localhost:3010/email", infos)
+                        axios.post("https://www.newme.ovh:3010/email", infos)
                             .then(response => {
                                 if (response.data == "not ok") {
                                     alert("Email already used")
@@ -47,7 +47,7 @@ const Inscription = () => {
                                             alert("Mot de passe trop court")
                                         } else {
                                             axios
-                                                .post("http://localhost:3010/inscription", infos)
+                                                .post("https://www.newme.ovh:3010/inscription", infos)
                                                 .then(response => {
                                                     if (response.status == 201) {
                                                         alert("Compte créer !");
