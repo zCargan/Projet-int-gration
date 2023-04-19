@@ -40,6 +40,8 @@ app.use((req, res, next) => {
 
 app.set('trust proxy', 1);
 
+//ceci est un commentaire de test
+
 var xhr = new XMLHttpRequest();
 xhr.open('GET', 'http://example.com/', true);
 xhr.withCredentials = true;
